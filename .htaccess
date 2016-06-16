@@ -1,0 +1,192 @@
+
+ErrorDocument 404 /404.htm
+RewriteEngine On
+
+RewriteRule ^$ /shop/view/
+RewriteRule ^/$ /shop/view/
+
+# # # # # # #
+# ПРОФИЛЬ # #
+# # # # # # #
+# ПРОСМОТР СТРАНИЦ
+RewriteRule ^content/([a-zA-Z0-9_-]+)$ index.php?do=viewpage&id=$1
+RewriteRule ^content/([a-zA-Z0-9_-]+)/$ index.php?do=viewpage&id=$1
+# ПРОСМОТР КАТЕГОРИЙ
+RewriteRule ^content/category/([a-zA-Z0-9_-]+)$ index.php?do=listbycat&category=$1&page=1
+RewriteRule ^content/category/([a-zA-Z0-9_-]+)/$ index.php?do=listbycat&category=$1&page=1
+RewriteRule ^content/category/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ index.php?do=listbycat&category=$1&page=$2
+RewriteRule ^content/category/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?do=listbycat&category=$1&page=$2
+# ДЕЙСТВИЯ НАД КОНТЕНТОМ :)
+RewriteRule ^special/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ index.php?do=$1&param=$2
+RewriteRule ^special/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?do=$1&param=$2
+# ПРОФИЛЬ, ОБЩИЕ ДЕЙСТВИЯ
+RewriteRule ^user/([a-zA-Z0-9_-]+)$ index.php?do=$1
+RewriteRule ^user/([a-zA-Z0-9_-]+)/$ index.php?do=$1
+# ЧТЕНИЕ КОММЕНТАРИЯ
+RewriteRule ^pm/openpm/([a-zA-Z0-9_-]+)$ index.php?do=openpm&id_pm=$1
+RewriteRule ^pm/openpm/([a-zA-Z0-9_-]+)/$ index.php?do=openpm&id_pm=$1
+# ВХОДЯЩИЕ СООБЩЕНИЯ
+RewriteRule ^pm/inboxpm$ index.php?do=inboxpm
+RewriteRule ^pm/inboxpm/$ index.php?do=inboxpm
+# ИСХОДЯЩИЕ
+RewriteRule ^pm/outboxpm$ index.php?do=outboxpm
+RewriteRule ^pm/outboxpm/$ index.php?do=outboxpm
+# НАПИСАТЬ СООБЩЕНИЕ
+RewriteRule ^pm/writepm$ index.php?do=writepm
+RewriteRule ^pm/writepm/$ index.php?do=writepm
+# ОТПРАВКА СООБЩЕНИЯ
+RewriteRule ^pm/sendpm$ index.php?do=sendpm
+RewriteRule ^pm/sendpm/$ index.php?do=sendpm
+# ОБРАТНАЯ СВЯЗЬ
+RewriteRule ^feedback/([a-zA-Z0-9_-]+)$ index.php?do=$1
+RewriteRule ^feedback/([a-zA-Z0-9_-]+)/$ index.php?do=$1
+# ЛЕНТА НОВОСТЕЙ
+RewriteRule ^rss/([a-zA-Z0-9_-]+).xml$ index.php?do=rss&feed=$1
+# ЧАТ
+RewriteRule ^chat$ index.php?do=chat
+RewriteRule ^chat/$ index.php?do=cha
+
+# ОПЦИИ
+RewriteRule ^options/([a-zA-Z0-9_-]+)$ index.php?do=$1
+RewriteRule ^options/([a-zA-Z0-9_-]+)/$ index.php?do=$1
+
+# СКЛАД
+RewriteRule ^sklad/view/all/([0-9]+)$ index.php?do=sklad&action=view&page=$1
+RewriteRule ^sklad/view/all/([0-9]+)$ index.php?do=sklad&action=view&page=$1
+
+RewriteRule ^sklad/view/category/([a-zA-Z0-9_-]+)/([0-9]+)$ index.php?do=sklad&action=view&page=$2&category=$1
+RewriteRule ^sklad/view/category/([a-zA-Z0-9_-]+)/([0-9]+)/$ index.php?do=sklad&action=view&page=$2&category=$1
+
+RewriteRule ^sklad/vieworders/all/([0-9]+)$ index.php?do=sklad&action=vieworders&page=$1
+RewriteRule ^sklad/vieworders/all/([0-9]+)$ index.php?do=sklad&action=vieworders&page=$1
+
+RewriteRule ^sklad/vieworders/category/([a-zA-Z0-9_-]+)/([0-9]+)$ index.php?do=sklad&action=vieworders&page=$2&dtype=$1
+RewriteRule ^sklad/vieworders/category/([a-zA-Z0-9_-]+)/([0-9]+)/$ index.php?do=sklad&action=vieworders&page=$2&dtype=$1
+
+
+
+RewriteRule ^sklad/journal/([0-9]+)$ index.php?do=sklad&action=journal&page=$1
+RewriteRule ^sklad/journal/([0-9]+)/$ index.php?do=sklad&action=journal&page=$1
+
+RewriteRule ^sklad/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=$1
+RewriteRule ^sklad/([a-zA-Z0-9_-]+)/$ index.php?do=sklad&action=$1
+
+RewriteRule ^sklad/item/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=$1&artikul=$2
+RewriteRule ^sklad/item/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?do=sklad&action=$1&artikul=$2
+
+RewriteRule ^sklad/category/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=$1&category=$2
+RewriteRule ^sklad/category/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?do=sklad&action=$1&category=$2
+
+RewriteRule ^sklad/orderdetails/([a-zA-Z0-9_-]+)/ index.php?do=sklad&action=orderdetails&operation=$1
+RewriteRule ^sklad/orderdetails/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=orderdetails&operation=$1
+
+RewriteRule ^sklad/orderinplus/([a-zA-Z0-9_-]+)/ index.php?do=sklad&action=orderinplus&operation=$1
+RewriteRule ^sklad/orderinplus/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=orderinpluss&operation=$1
+
+RewriteRule ^sklad/orderinminus/([a-zA-Z0-9_-]+)/ index.php?do=sklad&action=orderinminus&operation=$1
+RewriteRule ^sklad/orderinminus/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=orderinminus&operation=$1
+
+RewriteRule ^sklad/orderdelete/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=orderdelete&operation=$1
+RewriteRule ^sklad/orderdelete/([a-zA-Z0-9_-]+)/$ index.php?do=sklad&action=orderdelete&operation=$1
+
+
+# УЧЕТ ЗВОНКОВ
+
+RewriteRule ^sklad/deletecall/([a-zA-Z0-9_-]+)$ index.php?do=sklad&action=deletecall&callid=$1
+RewriteRule ^sklad/deletecall/([a-zA-Z0-9_-]+)/$ index.php?do=sklad&action=deletecall&callid=$1
+
+
+
+# ВИТРИНА МАГАЗИНА
+RewriteRule ^shop/search/([0-9]+)/(.*) index.php?do=shop&action=search&searchtext=$2&pagenum=$1
+RewriteRule ^shop/search/([0-9]+)/(.*)/ index.php?do=shop&action=search&searchtext=$2&pagenum=$1
+RewriteRule ^shop/search/ index.php?do=shop&action=search
+RewriteRule ^shop/search index.php?do=shop&action=search
+
+
+RewriteRule ^shop/findbytag/(.*) index.php?do=shop&action=findbytag&tag=$1
+RewriteRule ^shop/findbytag/(.*)/ index.php?do=shop&action=findbytag&tag=$1
+
+RewriteRule ^shop/findbyprice/([0-9]+)/([0-9]+)/([0-9]+) index.php?do=shop&action=findbyprice&priceMQ=$1&priceLQ=$2&page_nom=$3
+RewriteRule ^shop/findbyprice/([0-9]+)/([0-9]+)/([0-9]+)/ index.php?do=shop&action=findbyprice&priceMQ=$1&priceLQ=$2&page_nom=$3
+
+RewriteRule ^shop/findbyprice/start index.php?do=shop&action=findbyprice
+RewriteRule ^shop/findbyprice/start index.php?do=shop&action=findbyprice
+
+
+RewriteRule ^shop/view$ index.php?do=shop&action=view&page=1
+RewriteRule ^shop/view/$ index.php?do=shop&action=view&page=1
+
+RewriteRule ^shop/view/([0-9]+)$ index.php?do=shop&action=view&page=$1
+RewriteRule ^shop/view/([0-9]+)/$ index.php?do=shop&action=view&page=$1
+
+RewriteRule ^shop/view/category/([a-zA-Z0-9_-]+)/([0-9]+)$ index.php?do=shop&action=view&page=$2&category=$1
+RewriteRule ^shop/view/category/([a-zA-Z0-9_-]+)/([0-9]+)/$ index.php?do=shop&action=view&page=$2&category=$1
+
+
+RewriteRule ^shop/buyer/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ index.php?do=shop&action=$1&artikul=$2
+RewriteRule ^shop/buyer/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?do=shop&action=$1&artikul=$2
+
+
+RewriteRule ^shop/buyer/delcart/([a-zA-Z0-9_-]+)$ index.php?do=shop&action=delcart&nomer=$1
+RewriteRule ^shop/buyer/delcart/([a-zA-Z0-9_-]+)/$ index.php?do=shop&action=delcart&nomer=$1
+
+RewriteRule ^shop/buyer/recalc$ index.php?do=shop&action=recalc
+RewriteRule ^shop/buyer/recalc/$ index.php?do=shop&action=recalc
+
+RewriteRule ^shop/buyer/fpredzakaz$ index.php?do=shop&action=fpredzakaz
+RewriteRule ^shop/buyer/fpredzakaz/$ index.php?do=shop&action=fpredzakaz
+
+RewriteRule ^shop/buyer/predzakaz$ index.php?do=shop&action=predzakaz
+RewriteRule ^shop/buyer/predzakaz/$ index.php?do=shop&action=predzakaz
+
+RewriteRule ^shop/buyer/addtocart$ index.php?do=shop&action=addtocart
+RewriteRule ^shop/buyer/addtocart/$ index.php?do=shop&action=addtocart
+
+RewriteRule ^shop/buyer/clearcart index.php?do=shop&action=clearcart
+RewriteRule ^shop/buyer/clearcart/$ index.php?do=shop&action=clearcart
+
+RewriteRule ^shop/buyer/changecart/([a-zA-Z0-9_-]+)$ index.php?do=shop&action=changecart&nomer=$1
+RewriteRule ^shop/buyer/changecart/([a-zA-Z0-9_-]+)/$ index.php?do=shop&action=changecart&nomer=$1
+
+RewriteRule ^shop/buyer/viewprice index.php?do=shop&action=viewprice
+RewriteRule ^shop/buyer/viewprice/ index.php?do=shop&action=viewprice
+
+
+# # # # # # #
+# АДМИНКА # #
+# # # # # # #
+
+# ТОЧКА ВХОДА В АДМИНКУ
+RewriteRule ^admin/$ /_administrator.php?do=logform
+RewriteRule ^admin$ /_administrator.php?do=logform
+# ЛЮБЫЕ ДЕЙСТВИЯ !!! 
+RewriteRule ^admin/([a-zA-Z0-9_-]+)$ /_administrator.php?do=$1
+RewriteRule ^admin/([a-zA-Z0-9_-]+)/$ /_administrator.php?do=$1
+
+
+# # # # # # #
+# ГАЛЕРЕЯ # #
+# # # # # # #
+
+RewriteRule ^gallery/fnew$ /classes/gallery/gallery.php?action=fnew
+RewriteRule ^gallery/fnew/$ /classes/gallery/gallery.php?action=fnew
+
+RewriteRule ^gallery/fedit/([a-zA-Z0-9_-]+)$ /classes/gallery/gallery.php?action=fedit&id=$1
+RewriteRule ^gallery/fedit/([a-zA-Z0-9_-]+)/$ /classes/gallery/gallery.php?action=fedit&id=$1
+
+RewriteRule ^gallery/new$ /classes/gallery/gallery.php?action=new
+RewriteRule ^gallery/new/$ /classes/gallery/gallery.php?action=new
+
+RewriteRule ^gallery/edit$ /classes/gallery/gallery.php?action=edit
+RewriteRule ^gallery/edit/$ /classes/gallery/gallery.php?action=edit
+
+RewriteRule ^gallery/delete/([a-zA-Z0-9_-]+)$ /classes/gallery/gallery.php?action=delete&id=$1
+RewriteRule ^gallery/delete/([a-zA-Z0-9_-]+)$ /classes/gallery/gallery.php?action=delete&id=$1
+
+RewriteRule ^gallery/main$ /classes/gallery/gallery.php?action=browse&page=1
+RewriteRule ^gallery/main/$ /classes/gallery/gallery.php?action=browse&page=1
+RewriteRule ^gallery/browse/([0-9]+)$ /classes/gallery/gallery.php?action=browse&page=$1
+RewriteRule ^gallery/browse/([0-9]+)/$ /classes/gallery/gallery.php?action=browse&page=$1
+RewriteRule ^gallery/view/([a-zA-Z0-9]+)$ /classes/gallery/gallery.php?action=view&id=$1
+RewriteRule ^gallery/view/([a-zA-Z0-9]+)/$ /classes/gallery/gallery.php?action=view&id=$1
