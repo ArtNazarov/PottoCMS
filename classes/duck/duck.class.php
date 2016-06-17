@@ -3,7 +3,7 @@ if (!defined('APP')) {die('ERROR');};
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/fileutils/fileutils.class.php';
 class Duck extends FileUtils
 {            
-    var $ignore = array('cache', 'jerboa', 'sql');
+    var $ignore = array('cache', 'jerboa');
     function __construct($params)
 {
          parent::__construct($params);

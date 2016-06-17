@@ -3,36 +3,41 @@ if (!defined('APP')) {die('ERROR');};
 /*
  * В файле sysconst.php определены константы для подключения к базе данных
  */
-require_once $_SERVER['DOCUMENT_ROOT'].'/config/sysconst.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config/sysconst.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/duck/duck.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/classes/masterfactory/masterfactory.class.php';
 class SealDB
 {
-        var $db_host = DB_HOST; // Хост базы
+    var $db_host = DB_HOST; // Хост базы
 	var $db_password = DB_PASSWORD; // Пароль
 	var $db_user = DB_USER; // Пользователь
-	var $db_connection = null; // Соединение
+	var $db_link = null; // Соединение
 	var $db_name = DB_NAME; // Имя базы данных
 	var $db = null; // База данных
+        var $db_port = 3306;
 	var $db_table = ''; // Имя текущей таблицы
         var $sql_result = null; // Результат запроса
-	var $proc = null; // Запросы в уме
+	var $proc = null; // Запросы хранимые
 	var $params = null; // Параметры запросов
 	var $query = '';  // Последний запрос к базе
 	var $query_counter = 0; // Подсчитывает число запросов
 	var $log = null; // Лог sql запросов!
 	var $prefix = DB_PREFIX; // Префикс таблицы
 	var $components;
+        
+        
 	function __construct($params)
 	{
 		$this->query_counter = 0;
   	        $this->query = 0;
 		$this->log = new Duck($params);
 		$this->Plug();
-		mysql_query("SET NAMES utf8");
+		mysqli_query($this->db_link, "SET NAMES utf8") or die("ERROR: ".mysqli_error($this->db_link));
+                
 	$this->components = null;
   	$this->components['factory'] = new MasterFactory($params); // Фабрика классов
 	$this->components['view'] = $this->components['factory']->createInstance("Lorius", $params);
+        $this->log = new Duck($params);
         $this->log->WriteLog('sql', "sealdb started");
 	}
 	
@@ -81,9 +86,8 @@ function sql_protector($text)
  * или false, если  больше строк в выборке нет
  */        
 	function Read()
-	{
-
-		return mysql_fetch_array($this->sql_result);
+	{                
+		return mysqli_fetch_assoc($this->sql_result);
 	}
 /*
  * Устанавливает подключение к базе данных.
@@ -92,31 +96,75 @@ function sql_protector($text)
 	function Plug()
 	{
             
-$this->db_connection=@mysql_connect($this->db_host,$this->db_user,$this->db_password);
-if (false == $this->db_connection)        
+
+$this->db_link = mysqli_connect(
+        $this->db_host, 
+        $this->db_user,
+        $this->db_password);
+
+if (!$this->db_link) {
+    die("Database connection failed: " . mysqli_error());
+}            
+            
+if (false == $this->db_link)        
 {
-           throw new Exception('Указаны неверные параметры подключения к базе данных');     
+           throw new Exception('Uncorrect database parameters. Check it '. 
+           'host' . $this->db_host . 
+           'username:' .  $this->db_user . 
+           'password:' . $this->db_password);     
 }
 else
 {
+	
         $this->log->WriteLog('sql', "connection established \n");
 }
 ;
+
+/* возвращаем имя текущей базы данных */
+
+$this->sql_result = mysqli_query(
+        $this->db_link, 
+        "SHOW DATABASES");
+  
+   while ( $row = mysqli_fetch_row($this->sql_result))
+   {
+    $this->log->WriteLog("sql", "found database ". $row[0]);
+   };
+    mysqli_free_result($this->sql_result);
+
+/* выбираем текущую */
+$this->sql_result = mysqli_query(
+        $this->db_link, 
+        "USE " . $this->db_name);   
+
+
+/* возвращаем имя текущей базы данных */
+
+$this->sql_result = mysqli_query(
+        $this->db_link, 
+        "SELECT DATABASE();");
+  
+    $row = mysqli_fetch_row($this->sql_result);
+    $this->log->WriteLog("sql", "Default database is ". $row[0]);
+    mysqli_free_result($this->sql_result);
+
+
 /*
- * Если запрашиваемая таблица не существует, выдаем сообщение об ошибке
+ * Если запрашиваемая база не существует, выдаем сообщение об ошибке
  */       
-$this->db = @mysql_select_db($this->db_name, $this->db_connection);
+$this->db = mysqli_select_db($this->db_link, $this->db_name); 
+
 if (false == $this->db)
 {
-             throw new Exception("Запрашиваемая таблица ". $this->db_name . " не существует");     
+             throw new Exception("This database " . $this->db_name . " not exists");     
 };
 	}
 /*
  * Освобождает память от выборки
  */
 	function Clear()
-	{            
-		@mysql_free_result($this->sql_result) or die(mysql_error());
+	{                            
+		mysqli_free_result($this->sql_result) or die("ERROR: ".mysqli_error($this->db_link));
 		$this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
 	}
 /*
@@ -124,7 +172,7 @@ if (false == $this->db)
  */
 	function NRows()
 	{
-		$n = mysql_num_rows($this->sql_result);
+		$n = mysqli_num_rows($this->sql_result);
 		return $n;
 	}
 /*
@@ -132,7 +180,7 @@ if (false == $this->db)
  */
 	function Done()
 	{
-		mysql_close($this->db_connection);		
+		mysqli_close($this->db_link);		
                 $this->log->WriteLog('sql', "call mysql_close \n ");		
 	}
 /*
@@ -140,17 +188,26 @@ if (false == $this->db)
  */        
 	function SQL($aQuery)        
 	{
-		$this->CheckConnention();
+		$this->CheckConnention(); 
 		$this->query_counter++;
-		$this->log->WriteLog('sql', 'exec query '.$this->query." \n ");		
-		$this->sql_result = mysql_query($this->query, $this->db_connection);
+		$this->log->WriteLog('sql', 'exec query '.$this->query." \n ");		                
+		$this->sql_result = mysqli_query($this->db_link, $aQuery) or die("ERROR: ".mysqli_error($this->db_link));
+                if (is_object($this->sql_result))
+                {
+                  $this->log->WriteLog('sql', '[OK] query '.$aQuery);
+                }
+                else
+                {
+                    $this->log->WriteLog('sql', '[FAILED] query '.$aQuery);
+                };
+                
 	}
 /*
  * Назначает рабочую таблицу
  */        
 	function setTable($aTable)
 	{
-		$this->db_table = $this->prefix.$aTable;
+		$this->db_table = $this->db_name . "." . $this->prefix.$aTable;
 
 	}
 /*
@@ -173,9 +230,9 @@ if (false == $this->db)
 	function Select($aFields, $aCondition)
 	{
 	    $this->sql_protector($aCondition);
-        $table = $this->getTable();
-		$this->query = "SELECT $aFields FROM $table WHERE $aCondition;";
-		$this->SQL($this->query);
+            $table = $this->getTable();
+            $this->query = "SELECT $aFields FROM $table WHERE $aCondition;";
+            $this->SQL($this->query);
 		
 	}
         /* 
@@ -190,9 +247,9 @@ if (false == $this->db)
 	function Insert($aFields, $aValues)
 	{
 	    $this->sql_protector($aValues);
-		$table = $this->getTable();
-		$this->query = "INSERT INTO $table ($aFields ) VALUES ( $aValues);";
-        $this->SQL($this->query);
+            $table = $this->getTable();
+            $this->query = "INSERT INTO $table ($aFields ) VALUES ( $aValues);";
+            $this->SQL($this->query);
 	}
         /* 
          * Запрос на удаление записи        
@@ -278,8 +335,8 @@ if (false == $this->db)
 	    $this->sql_protector($aCondition);
 	  	$table = $this->db_table;
 		$this->query = "SELECT $aField FROM $table WHERE $aCondition;";
-		$this->SQL($this->query);
-		$data = mysql_fetch_array($this->sql_result);
+		$this->SQL($this->query);                
+		$data = mysqli_fetch_assoc($this->sql_result);
 		$z = $data[$aField];
 		$this->Clear();
 		return $z;
