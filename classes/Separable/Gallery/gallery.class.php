@@ -160,7 +160,7 @@ class Gallery
         $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/gallery/clientlist.items.tpl');
         $items = "<table width='100%'>";
         $c = 1;
-        while ($data = $this->components['db']->Read())
+        $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
             {
             if ($c == 1) {$items .= "<tr>";};
             $id = $data['id'];

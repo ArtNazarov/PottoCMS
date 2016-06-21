@@ -62,7 +62,7 @@ $this->components['db']->setTable('forums');
 $this->components['db']->Select(' * ','1=1');
 $items = 'Конференция<br/>';
 $this->title = $this->conf_name;
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $this->components['view']->SetVar('FORUM_URL', '/forum/'.$data['forum_url'].'/');
 $this->components['view']->SetVar('FORUM_NAME', $data['forum_name']);
@@ -109,7 +109,7 @@ $this->title = $this->conf_name . " $forum_name";
 $this->components['db']->setTable('themes');
 $this->components['db']->Select(' * ',"forum_url='$forum_url'");
 $items = $breadcrumbs."<br/>";
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $this->components['view']->SetVar('THEME_URL', '/forum/theme/'.$data['theme_url'].'/');
 $this->components['view']->SetVar('THEME_NAME', $data['theme_name']);
@@ -179,7 +179,7 @@ $this->title = $this->conf_name . "$forum_name - $theme_name";
 $this->components['db']->setTable('messages');
 $this->components['db']->Select(' * ',"theme_url='$theme_url'  ORDER BY message_id ");
 $items = $breadcrumbs."<br/>";
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $this->components['view']->SetVar('MESSAGE_ID', $data['message_id']);
 $this->components['view']->SetVar('MESSAGE', $data['message']);
@@ -353,7 +353,7 @@ $this->components['db']->setTable('themes');
 $this->components['db']->Select(" * ", "forum_url='$forum_url'");
 $arr_themes = array();
 $i = 0;
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $arr_themes[$i] = $data['theme_url'];
 $i = $i+1;

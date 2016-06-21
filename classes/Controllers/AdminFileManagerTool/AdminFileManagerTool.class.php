@@ -14,7 +14,7 @@ class AdminFileManagerTool extends FileUtils
 	var $ui;
 	var $action;
 	var $dirobject;
-	var $mod_path = '/classes/fileferret/';
+	var $mod_path = __DIR__ . '/';
         
           function GetPost($param, $def)
      {

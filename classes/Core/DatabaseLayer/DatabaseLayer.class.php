@@ -50,13 +50,13 @@ class DatabaseLayer
   	        $this->query = 0;
 		$this->log = new Log($params);
 		$this->Plug();
-		mysqli_query($this->db_link, "SET NAMES utf8") or die("ERROR sealdb.class.php (attemp to SET NAMES UTF8) " . mysqli_error($this->db_link));
+		mysqli_query($this->db_link, "SET NAMES utf8") or die("ERROR DatabaseLayer.class.php (attemp to SET NAMES UTF8) " . mysqli_error($this->db_link));
                 
 	$this->components = null;
   	$this->components['factory'] = new ClassFactory($params); // Фабрика классов
 	$this->components['view'] = $this->components['factory']->createInstance("TemplateTool", $params, 'Core');
         $this->log = new Log($params);
-        $this->log->WriteLog('sql', "sealdb started");
+        $this->log->WriteLog('sql', "DatabaseLayer started");
         $this->precord = 0;
 	}
 	
@@ -183,9 +183,9 @@ if (false == $this->db)
  */
 	function Clear()
 	{                 
-            var_dump($this->query);
-            var_dump($this->sql_result);
-		mysqli_free_result($this->sql_result);// or die("ERROR sealdb.class.php at Clear: ".mysqli_error($this->db_link));
+           // var_dump($this->query);
+           // var_dump($this->sql_result);
+		mysqli_free_result($this->sql_result);// or die("ERROR DatabaseLayer.class.php at Clear: ".mysqli_error($this->db_link));
 		$this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
 	}
 /*
@@ -212,7 +212,7 @@ if (false == $this->db)
 		$this->CheckConnention(); 
 		$this->query_counter++;
 		$this->log->WriteLog('sql', 'exec query '.$this->query." \n ");		                
-		$this->sql_result = mysqli_query($this->db_link, $aQuery, MYSQLI_USE_RESULT) or die("ERROR sealdb.class.php at Sql: ".mysqli_error($this->db_link));
+		$this->sql_result = mysqli_query($this->db_link, $aQuery, MYSQLI_USE_RESULT) or die("ERROR DatabaseLayer.class.php at Sql: ".mysqli_error($this->db_link));
                 if (is_object($this->sql_result))
                 {
                   $this->log->WriteLog('sql', '[OK] query '.$aQuery);
@@ -379,7 +379,7 @@ if (false == $this->db)
 	function __destruct()
 	{           
            if ($this->connection_status()!=0) {$this->Done();};
-           $this->log->WriteLog('sql', "sealdb destructor called");
+           $this->log->WriteLog('sql', "DatabaseLayer destructor called");
 	}
         
         function connection_status()

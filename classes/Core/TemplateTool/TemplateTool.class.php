@@ -381,14 +381,12 @@ $s = iconv("UTF-8","UTF-8//IGNORE",$s);
 	{
 	$this->UseTpl($tpl);	
 	$view = '';
-	while ($item = $src->Read())
+        $rows = $src->Read();
+	foreach ($rows as $i => $item)
 	{
-	foreach ($arr as $item)
-		{			
 			$this->SetVars($item);
 			$this->CreateView();
 			$view .= $this->GetView();
-		};	
 	};
         $this->UseTpl($wrap_tpl);
         $this->SetVars($vars);
@@ -438,14 +436,12 @@ $s = iconv("UTF-8","UTF-8//IGNORE",$s);
 	{
 	$this->UsePattern($tpl);	
 	$view = '';
-	while ($item = $src->Read())
+        $rows = $src->Read();
+	foreach ($rows as $item)
 	{
-	foreach ($arr as $item)
-		{			
 			$this->SetVars($item);
 			$this->CreateView();
-			$view .= $this->GetView();
-		};	
+			$view .= $this->GetView();	
 	};
         $this->UseTpl($wrap_tpl);       
         $this->SetVars($vars);    
@@ -504,7 +500,8 @@ $s = iconv("UTF-8","UTF-8//IGNORE",$s);
   function MTpl($templ_file, $templ_struc, $data_obj)
   {
       $view = '';
-      while ($data = $data_obj->Read())
+      $rows = $data_obj->Read();
+      foreach ($rows as $i => $data)
       {
       $this->UseTpl($templ_file);
       $x = array();

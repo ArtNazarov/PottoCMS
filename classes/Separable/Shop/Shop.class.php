@@ -82,7 +82,7 @@ $tg = explode(",", $tags);
   foreach ($tg as $t)
   {
    $t = trim($t);
-   $db = new SealDb($p);
+   $db = new DatabaseLayer($p);
    $db->setTable('trade_sklad');
    $db->Select('*', "artikul='$t'");
    $data = $db->Read();
@@ -208,7 +208,7 @@ $this->components['db']->setTable('trade_sklad');
 $this->components['db']->Select('*', ' 1 = 1 ');
 $arr = array();
 $k = 0;
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
  $k++;
  $arr[$k] = $data;
@@ -248,7 +248,7 @@ function ListOfTags()
   $tags = array();
   $this->components['db']->setTable('trade_sklad');
   $this->components['db']->Select('tags', ' 1 = 1 ');
-  while ($data = $this->components['db']->Read())
+  $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
     {
         $tag = $data['tags'];
 		$tr = array();
@@ -284,7 +284,7 @@ function ChildWhereInclude($category)
 $zapros = " ( type = '$category' ) ";
 $this->components['db']->setTable("trade_structure");
 $this->components['db']->Select("category", "parent='$category'");
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $i = $data['category'];
 $zapros = $zapros." OR (type = '$i') ";
@@ -425,7 +425,7 @@ function GetUsernameFromSession()
 
 	$this->components['db']->setTable('trade_structure');
     $this->components['db']->Select('*', "category='$Category'");
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
     $Cat_name = $data['catname'];
 	$Parent =  $data['parent'];
@@ -462,7 +462,7 @@ $where = "parent = ''";
 
 	$this->components['db']->Select('*', "$where");
 	
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
 	 $category = $data['category'];
 		$catname = $data['catname'];
@@ -503,7 +503,7 @@ function GetNamesOfCategories()
     $this->components['db']->setTable('trade_structure');
     $names = array();
     $this->components['db']->Select(' * ', '1 = 1');
-    while ($data = $this->components['db']->Read())
+    $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
     {
         $names[$data['category']] = $data['catname'];
     };
@@ -679,7 +679,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
 	{
 		$c = 1;
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
 		if ($c==1) {$items .= "<tr>";};
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
@@ -874,7 +874,7 @@ $this->components['db']->Select('*', " 1 = 1 ORDER BY captiontxt, price");
 $view = "<h1>Прайс-лист</h1>
 <table class='table table-striped' width='100%'><tr><th>Название</th><th>Цена</th></tr>";
 $i = 0;
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 		{
 		$a = $data['artikul'];
 //		$style='';
@@ -1139,7 +1139,7 @@ $this->components['db']->setTable('trade_sklad');
 	$artikul = $_GET['artikul'];
 	$this->components['db']->Select('*', "artikul='$artikul'");
 	$this->components['view']->SetVar('FORM_ACTION', 'edit');
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
 		$this->components['view']->SetVar('PHOTO', $data['photo']);
@@ -1234,7 +1234,7 @@ return $this->components['view']->GetView();
  $this->components['db']->Select('*', " (tags LIKE '%$tag%') ORDER BY artikul LIMIT $limit_nom, $items_ui"); // по тегу
  $result = "<table border='0' width='960'>";
  $c = 0;
- while ($data = $this->components['db']->Read())
+ $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
  {
   if (($c == 0)  or (($c % $col_count)== 0))
     {  $result .= '<tr>'; };
@@ -1324,7 +1324,7 @@ return $this->components['view']->GetView();
  $this->components['db']->Select('*', " ((price >= $priceMQ) AND (price<=$priceLQ)) ORDER BY price LIMIT $limit_nom, $items_ui"); // по тегу
  $result = "<table border='0' width='100%'>";
  $c = 0;
- while ($data = $this->components['db']->Read())
+ $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
  {
   if (($c == 0)  or (($c % $col_count)== 0))
     {  $result .= '<tr>'; };

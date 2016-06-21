@@ -265,7 +265,7 @@ $pages_count = ceil($items_count / $this->items_per_page ) ;
 $this->components['db']->Select(" * ", $rq . $limitation);
 $items = "<table width='100%' border='0'>";
 $c = 1;
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 if ($c == 1)  {$items .= "<tr>";};
 $c = $c + 1;

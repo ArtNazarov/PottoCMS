@@ -48,8 +48,8 @@ $filter = ($usr_role=='admin') or ( $usr_role=='seller');
 general_protection(!$filter);
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/ValidatorTypeChecker/ValidatorTypeChecker.class.php';
 set_exception_handler('special_handler');
-include_once $_SERVER['DOCUMENT_ROOT'].'/iofilters/filterio.php'; // ФИЛЬТР ВВОДА
-require_once $_SERVER['DOCUMENT_ROOT'].'/iofilters/filtervars.php'; // ФИЛЬТРЫ ПЕРЕМЕННЫХ
+include_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/iofilters/filterio.php'; // ФИЛЬТР ВВОДА
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/iofilters/filtervars.php'; // ФИЛЬТРЫ ПЕРЕМЕННЫХ
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php'; // ФАБРИКА КЛАССОВ
 $f = new ClassFactory($params);
 $site = $f->createInstance($class, $params, $category);

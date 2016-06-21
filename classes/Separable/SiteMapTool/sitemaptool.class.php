@@ -8,13 +8,13 @@ class SiteMapTool
 {
  var $m;
  var $o;
- var $mod_path = '/classes/SiteMapTool/';
+ var $mod_path = __DIR__ . '/';
  function __construct($params)
  {
 	  // Настройки шаблонизатора
 	 $this->v = new TemplateTool($params);
 	 // Настройки базы данных
- 	 $this->m = new SealDB($params);
+ 	 $this->m = new DatabaseLayer($params);
  	 $this->m->Plug();
  }
  function __destruct()
@@ -45,7 +45,7 @@ class SiteMapTool
 	 // Для страниц сайта
 	 $this->m->setTable('pages');
  	 $this->m->Select('id', '1=1');
-            $rows = $this->components['db']->Read();
+         $rows = $this->components['db']->Read();
          foreach ($rows as $index => $data )
 	 {
  	   $url = $data['id'];

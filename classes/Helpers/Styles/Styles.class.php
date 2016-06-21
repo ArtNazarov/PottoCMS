@@ -101,7 +101,8 @@ function view() // Просмотр списка блоков
  $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/items/styleslist.tpl');
  $this->components['db']->setTable('styles');
  $this->components['db']->Select('*', " 1 = 1 ");
- while ($record = $this->components['db']->Read())
+ $rows = $this->components['db']->Read();
+ foreach ($rows as $i => $record)
  {
 	$this->components['view']->SetVars(
 	array(

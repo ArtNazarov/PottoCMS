@@ -75,7 +75,7 @@ function GetUserOption($username, $optname) // Сохраняет пользов
 {
 $this->components['db']->setTable('useroptions');
 $this->components['db']->Select('optvalue', " (username='$username' AND optname='$optname' )");
-$data = $this->components['db']->Read();
+$data = $this->components['db']->Read()[0];
 return $data['optvalue'];
 }
 
@@ -115,7 +115,8 @@ $cache = $this->UserCacheName($username);
 // Не существует?
 if ($this->components['var_cache']->failed($cache)==true)
 {
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read();    
+foreach ($rows as $i => $data)
 	{
 	   $optname = $data['optname'];
 	   $optvalue = $data['optvalue'];
@@ -270,7 +271,7 @@ function GetRoleName($aRole)
 {
 $this->components['db']->setTable('roles');
 $this->components['db']->Select('rolename', "role='$aRole'");
-$data = $this->components['db']->Read();
+$data = $this->components['db']->Read()[0];
 return $data['rolename'];
 }
 		
@@ -560,7 +561,8 @@ $this->components['db']->setTable('users');
 $this->components['db']->Select('user, role', 'online=1');
 $userlist = 'пользователи: ';
 $count = 0;
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read();
+foreach ($rows as $i => $data)
 {
 $role = $data['role'];
 $userlist .= "<span class='usr$role'>".$data['user'].'</span> ; ';
@@ -738,7 +740,8 @@ $this->UserLogOutMsg();
                                 $this->components['db']->setTable('users');
                                 $this->components['db']->Select('user, ukey, role', '1=1');
                                 $this->vizualized .= $this->components['db']->sql_result;
-                                while ($data = $this->components['db']->Read())
+                                $rows = $this->components['db']->Read();
+                                foreach ($rows as $i => $data )
                                 {
                                         $this->components['view']->SetVar('USERNAME', $data['user']);
                                     $this->components['view']->SetVar('USERKEY', $data['ukey']);

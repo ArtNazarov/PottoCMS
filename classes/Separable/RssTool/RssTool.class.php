@@ -19,7 +19,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
 class RssTool
 {
    var $components;
-   var $mod_path = '/classes/butterfly/';
+   var $mod_path = __DIR__ . '/';
    function __construct($params)
    {
 	 $this->components['factory'] = new ClassFactory($params);

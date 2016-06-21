@@ -6,7 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
 class Emailing
 {
 	var $components;
-	var $mod_path = '/classes/Embeddable/Emailing/';
+var $mod_path = __DIR__ . '/';
 function __construct($params)
 {
   $this->components = null;

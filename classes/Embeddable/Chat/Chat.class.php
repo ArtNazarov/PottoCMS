@@ -7,7 +7,7 @@ class Chat
   var $components; // Компоненты
   var $messages; // Сообщения
   var $count; // Число сообщений
-  var $mod_path = '/classes/okapichat/';
+var $mod_path = __DIR__ . '/';
   function __construct($params)
   {
   	  $this->components = null;

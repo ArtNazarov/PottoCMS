@@ -151,7 +151,7 @@ function ChildWhereInclude($category)
 $zapros = " type = '$category' ";
 $this->components['db']->setTable("trade_structure");
 $this->components['db']->Select("category", "parent='$category'");
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 {
 $i = $data['category'];
 $zapros = $zapros." OR (type = '$i') ";
@@ -178,7 +178,7 @@ return $zapros;
 
 	$this->components['db']->setTable('trade_structure');
     $this->components['db']->Select('*', "category='$Category'");
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
     $Cat_name = $data['catname'];
 	$Parent =  $data['parent'];
@@ -254,7 +254,7 @@ echo 'Gathering items at store...';
     $this->components['db']->SetTable('trade_sklad');
     $this->components['db']->Select('*', '1 = 1');
     $replacements = array();
-    while ($data = $this->components['db']->Read())
+    $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
     {
                     
            $captiontxt = $data['captiontxt'];
@@ -570,7 +570,7 @@ $where = "parent = ''";
 
 	$this->components['db']->Select('*', "$where");
 	
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
 	   	$category = $data['category'];
 		$catname = $data['catname'];
@@ -625,7 +625,7 @@ function ViewOrders()
 	$this->components['db']->Select('operation, dtype, agent, username, status, date ', "$where ORDER BY operation LIMIT $from_page, $articles");
 	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
 	{
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
 	   	$this->components['view']->SetVar('OPERATION', $data['operation']);
                 
@@ -697,7 +697,8 @@ function View()
     // Получаем имена категорий
     $this->components['db']->Select('*', "1=1");
     $nameofcategory = array();
-    while ($data = $this->components['db']->Read())
+    $rows = $this->components['db']->Read();
+    foreach ($rows as $i=>$data)
     {
         $nameofcategory[$data['category']] = $data['catname'];
     };    
@@ -706,7 +707,8 @@ function View()
 	$this->components['db']->Select('*', "$where ORDER BY description LIMIT $from_page, $articles");
 	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
 	{
-	while ($data = $this->components['db']->Read())
+        $rows = $this->components['db']->Read();
+	foreach ($rows as $i => $data)
 	{
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
 	   	$this->components['view']->SetVar('TYPE',
@@ -819,7 +821,7 @@ function View()
 	$artikul = $_GET['artikul'];
 	$this->components['db']->Select('*', "artikul='$artikul'");
 	$this->components['view']->SetVar('FORM_ACTION', 'edit');
-	$data = $this->components['db']->Read();
+	$data = $this->components['db']->Read()[0];
 	
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
      	$this->components['view']->SetVar('DESCRIPTION', $data['description']);
@@ -857,13 +859,14 @@ function View()
 	$this->components['db']->setTable('trade_structure');
 	$category = $_GET['category'];
 	$this->components['db']->Select('category, catname, parent', "category='$category'");
-        $data = $this->components['db']->Read();
+        $data = $this->components['db']->Read()[0];
         $pc = $data['parent'];
         $this->components['db']->Select('category, catname, parent', "category='$category'");
 	$this->components['view']->SetVar('FORM_ACTION', 'edittype');
-	while ($data = $this->components['db']->Read())
+        $rows = $this->components['db']->Read();
+	foreach ($rows as $i => $data)
 	{
-	   	$this->components['view']->SetVar('CATEGORY', $data['category']);
+	$this->components['view']->SetVar('CATEGORY', $data['category']);
      	$this->components['view']->SetVar('PARENT', $data['parent']);
      	$this->components['view']->SetVar('CATNAME', $data['catname']);		
 	}
@@ -894,7 +897,7 @@ function View()
  $arr = array();
  $selected = array();
  $c = 0;
- while ($data = $this->components['db']->Read())
+ $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
  {
   $arr[$data['artikul']] = $data['description'];
  // $selected[$c] = $data['artikul']; $c++; 
@@ -929,7 +932,7 @@ function View()
  foreach ($keys as $artikul) {
  $this->components['db']->setTable('trade_sklad');
  $this->components['db']->Select('*', "artikul='$artikul'");
- $data =  $this->components['db']->Read();
+ $data =  $this->components['db']->Read()[0];
  $this->components['view']->SetVar('DESCRIPTION', $data['description']);
  $this->components['view']->SetVar('PRICE', $data['price']);
  $this->components['view']->CreateView(); 
@@ -964,7 +967,7 @@ function View()
 		
 		$this->components['db']->setTable('trade_sklad');
 		$this->components['db']->Select(' * ', "artikul='$artikul'");
-		$data = $this->components['db']->Read();
+		$data = $this->components['db']->Read()[0];
 		$description = $data['captiontxt'];
 	    $this->components['view']->SetVar('DESCRIPTION', $description);
 
@@ -1002,7 +1005,7 @@ function addcall()
 $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.callmsg.tpl');
 $this->components['db']->setTable('trade_sklad_calls');
 $this->components['db']->Select('count(*) as idmax', '1=1');
-$data = $this->components['db']->Read();
+$data = $this->components['db']->Read()[0];
 $callid=$data['idmax']+1;
 $callfrom = $_POST['callfrom'];
 $callto = $_POST['callto'];
@@ -1039,7 +1042,8 @@ $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/skla
 $this->components['db']->setTable('trade_sklad_calls');
 $this->components['db']->Select('*', '1=1 ORDER BY callid DESC');
 $items = '';
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read();
+foreach ($rows as $i => $data)
 {
     $this->components['view']->CreateView();
     $this->components['view']->SetVar('CALLID', $data['callid']);
@@ -1093,7 +1097,7 @@ else
 	$artikul = $_SESSION['bill']["item".$i]['artikul'];
 	$this->components['db']->Select(' * ', "artikul='$artikul'");
 
-	$data = $this->components['db']->Read();
+	$data = $this->components['db']->Read()[0];
 	
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
      	$this->components['view']->SetVar('DESCRIPTION', $data['captiontxt']);
@@ -1152,7 +1156,8 @@ $operation = $_GET['operation']; // Получить номер операции
    $this->components['db']->setTable('trade_operations_details');
    $this->components['db']->Select("*", "operation='$operation'");
    $i = 0;
-   while ($data = $this->components['db']->Read())
+   $rows = $this->components['db']->Read();
+   foreach ($rows as $i=>$data)
      {
 	     $i = $i + 1;
 		 $this->components['view']->SetVar('NOMER', $i);	
@@ -1173,7 +1178,7 @@ $operation = $_GET['operation']; // Получить номер операции
    $this->components['db']->setTable('trade_operations');   
    $this->components['db']->Select("*", "operation='$operation'");
    
-   $data = $this->components['db']->Read();
+   $data = $this->components['db']->Read()[0];
    
    $this->components['view']->SetVar('DATE', $data['date']); // Дата
    $this->components['view']->SetVar('AGENT', $data['agent']);	// Контрагент
@@ -1271,7 +1276,8 @@ return $this->components['view']->GetView();
 	 // Для групп товаров
 	 $this->components['db']->setTable('trade_structure');
 	 $this->components['db']->Select('*', '1=1');
-	 while ($data = @$this->components['db']->Read())
+         $rows = $this->components['db']->Read();
+	 foreach ($rows as $i => $data)
 	 {
  	   $url = $data['category'];
        $this->components['view']->SetVar('URL',  'http://'.$_SERVER['SERVER_NAME'].'/shop/view/category/'.$url.'/1');
@@ -1283,7 +1289,8 @@ return $this->components['view']->GetView();
 	 // Для товаров
 	 $this->components['db']->setTable('trade_sklad');
  	 $this->components['db']->Select('artikul', '1=1');
-	 while ($data = @$this->components['db']->Read())
+         $rows = $this->components['db']->Read();
+	 foreach ($rows as $i => $data)
 	 {
  	   $url = $data['artikul'];
        $this->components['view']->SetVar('URL',  'http://'.$_SERVER['SERVER_NAME'].'/shop/buyer/viewitempage/'.$url);

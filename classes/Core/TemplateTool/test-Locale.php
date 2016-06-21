@@ -1,6 +1,6 @@
 <?php
 define('APP', 0);
-$mod_path = $_SERVER['DOCUMENT_ROOT'].'/classes/Core/TemplateTool/';
+$mod_path = __DIR__ . '/';
 require_once $mod_path . 'TemplateTool.class.php';
 $p = null;
 $view = new TemplateTool($p);

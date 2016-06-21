@@ -60,7 +60,8 @@ function filledit()
  $blockname = $_POST['blockname'];  
  $this->components['db']->setTable('blocks');
  $this->components['db']->Select('*', " blockname = '$blockname' ");
- $record = $this->components['db']->Read();  
+ $rows = $this->components['db']->Read();  
+ $record = $rows[0];
   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/actions/block.tpl');
   $this->components['view']->SetVars(array(
 	 'ACTION' => 'edit',
@@ -77,7 +78,8 @@ function getblockbyname($blockname)
 {
  $this->components['db']->setTable('blocks');
  $this->components['db']->Select('*', " blockname = '$blockname' ");
- $record = $this->components['db']->Read();  
+ $rows = $this->components['db']->Read();  
+ $record = $rows[0];
  return $record['blockview'];
 }
 function fillnew()
@@ -108,7 +110,8 @@ function view() // Просмотр списка блоков
  $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/items/blockslist.tpl');
  $this->components['db']->setTable('blocks');
  $this->components['db']->Select('*', " 1 = 1 ");
- while ($record = $this->components['db']->Read())
+ $rows = $this->components['db']->Read();
+ foreach ($rows as $i => $record)
  {
 	$this->components['view']->SetVars(
 	array(

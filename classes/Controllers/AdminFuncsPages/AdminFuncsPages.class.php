@@ -268,7 +268,9 @@ class AdminFuncsPages
 					$this->ListConditions($filter_status, $filter_category, $ordering)
 					);
 					
-				$data = $this->components['db']->Read();
+				$rows = $this->components['db']->Read();
+                                
+                                $data = $rows[0];
 				
 				$totalitems = $data['totalitems'];
 				$total_pages = floor($totalitems/$items_per_page)+1;
@@ -288,8 +290,8 @@ class AdminFuncsPages
 				$this->components['db']->Select(" $fields_set ",
 					$this->ListConditions($filter_status, $filter_category, $ordering) . " LIMIT $start_page,
 					$items_per_page ");
-
-				while ($data = $this->components['db']->Read())
+                                $rows = $this->components['db']->Read();
+				foreach ($rows as $i => $data)
 				{
  				    $this->components['view']->SetVar('CAT', $data['category']);
 					$this->components['view']->SetVar('PAGE-ID', $data['id']);
@@ -579,7 +581,8 @@ $this->ui = 'Успешно обновлено! <a href="/admin/categories">Ве
 				$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/items/admincatlist.tpl');
 				$this->components['db']->SetTable('categories');
 				$this->components['db']->Select('category, cat_name, parent', '1=1');
-				while ($data = $this->components['db']->Read())
+                                $rows = $this->components['db']->Read();
+				foreach ($rows as $i => $data)
 				{
  				    $this->components['view']->SetVar('CATEGORY', $data['category']);
 					$this->components['view']->SetVar('PARENT', $data['parent']);

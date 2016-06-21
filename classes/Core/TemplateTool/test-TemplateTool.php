@@ -1,11 +1,11 @@
 <?php
 define('APP', 0);
-$mod_path = $_SERVER['DOCUMENT_ROOT'].'/classes/Core/TemplateTool/';
-require_once $mod_path . 'TemplateTool.class.php';
+var $mod_path = __DIR__ . '/';
+require_once $mod_path . '/TemplateTool.class.php';
 
 $p = null;
 $view = new TemplateTool($p);
-$view->UseTpl($mod_path . 'test-TemplateTool.tpl');
+$view->UseTpl($mod_path . '/test-TemplateTool.tpl');
 
 $page = 'index'; // default value
 if (isset($_GET['page']))

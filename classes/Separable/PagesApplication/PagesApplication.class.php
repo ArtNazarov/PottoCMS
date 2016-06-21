@@ -149,7 +149,7 @@ class PagesApplication
    {
 $this->components['db']->setTable('styles');
 $this->components['db']->Select(' * ', " 1 = 1");
-while ($data = $this->components['db']->Read())
+$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
     {
         $this->components['view']->AddStyle($data['stylename']);
     };
@@ -215,7 +215,7 @@ $this->components['view']->SetVar('USER_AREA', $this->components['usr']->UserPro
 		$this->components['db']->Select(' * ', " lang = '$lang' ");
                 $repl = array();
                 
-                while ($data = $this->components['db']->Read())
+                $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
                 {
                     $repl[$data['id']] = $data['caption'];
                 
@@ -225,7 +225,7 @@ $this->components['view']->SetVar('USER_AREA', $this->components['usr']->UserPro
 		"id, title, created",
 		"category = '$aCategory' ORDER BY created DESC LIMIT 0 , $article_num");
 		$block = "";
-		while ($data = $this->components['db']->Read())
+		$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 		{
 			  $date = $data['created'];
 			  $title = $data['title'];                          
@@ -253,7 +253,7 @@ $this->components['view']->SetVar('USER_AREA', $this->components['usr']->UserPro
 
 	$this->components['db']->setTable('categories');
     $this->components['db']->Select('parent, cat_name', "category='$Category'");
-	while ($data = $this->components['db']->Read())
+	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
     $Cat_name = $data['cat_name'];
 	$Parent =  $data['parent'];
@@ -281,7 +281,8 @@ else
 	 // Подключаем глобальные блоки, указанные в таблице blocks
 	 $this->components['db']->SetTable('blocks');
 	 $this->components['db']->Select(' * ', ' 1 = 1 ');
-	 while ($record = $this->components['db']->Read())
+	 $rows = $this->components['db']->Read();
+         foreach ($rows as $i => $record)
 	 {
 	 $this->components['view']->SetVar($record['blockname'], $record['blockview']);
 	 };
@@ -340,7 +341,7 @@ else
             $lang = $this->DetectLanguage();
             $this->components['db']->setTable('voc');            
             $this->components['db']->Select(' * ', " lang = '$lang' ");
-            while ($data = $this->components['db']->Read())
+            $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
             {
               $this->components['view']->ReplView($data['orig'], $data['wrd']);
             };            
@@ -432,7 +433,7 @@ else
              $lang = 'rus';
              $links = "<br/><i>Доступные языки: &nbsp;<span onclick='reloadlng(\"$lang\");'>$lang</span>&nbsp;";
              $t = 0;
-                 while ($data = $this->components['db']->Read())
+                 $rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
                  {
                      $t = $t + 1;                     
                      $lang = $data['lang'];
@@ -499,7 +500,7 @@ while ($transl = $this->components['db']->Read())
   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/readers/items/item.tpl');
   $this->components['db']->Select('category, id, title, body',
  "category='$aCategory'"." ORDER BY created DESC  LIMIT $StartArticle, $articles");
-				while ($data = $this->components['db']->Read())
+				$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 				{
 				if ($c == 1) {$t .= "<tr>";};
 				$t .= "<td class='listitem' valign='top' align='left' width='$w%'>";
@@ -532,7 +533,7 @@ if ($c > $cols) {$t .= "</tr>"; $c = 1;};
 
   if ($this->components['db']->NRows()>0)
   {   $t .= "<br/><h4>Подкатегории</h4>";
-				while ($data = $this->components['db']->Read())
+				$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 				{
 					$catname = $data['cat_name'];
 					$catitem = $data['category'];

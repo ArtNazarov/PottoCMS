@@ -5,7 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
 class PrivateMessages
 {
 	var $components;
-	var $mod_path = '/classes/Embeddable/PrivateMessages/';
+	var $mod_path = __DIR__ . '/';
 	function __construct($params)
 	{
 		$this->components['factory'] = new ClassFactory($params);
@@ -30,7 +30,7 @@ class PrivateMessages
     $this->components['db']->setTable('users');
 	$aKey = $_SESSION['ukey'];
 	$this->components['db']->Select("user", "ukey='$aKey'");
-	$data = $this->components['db']->Read();
+	$data = $this->components['db']->Read()[0];
 	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'pm_form.tpl');
 	$this->components['view']->SetVar('USERNAME', $data['user']);
 	$this->components['view']->CreateView();

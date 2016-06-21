@@ -2,7 +2,11 @@
 if (!defined('APP')) {die('ERROR rattlesnake.class.php');};
 function special_handler($exception) 
     {
-      $msg = $exception->getMessage();
+      $msg = $exception->getMessage() . ' ' . $exception->getLine() . ' ' 
+              . $exception->getFile();
+      
+      
+      
       $file = fopen($_SERVER['DOCUMENT_ROOT']. "/logs/exceptions.log", "a+");      
       fwrite($file,  $msg. "\n");
       fclose($file);    
