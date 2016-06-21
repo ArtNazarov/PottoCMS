@@ -12,10 +12,11 @@ if (!defined('APP')) {die('ERROR');};
  * \brief Простая капча.
  * Выводит изображение, которое должен распознать пользователь.
  * Ответ пользователя сверяется с правильным.
- * Требует наличия файла /classes/berkut/image.php
+ * Требует наличия файла /classes/Services/CaptchaTool/image.php
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/Encryption/Encryption.class.php';
 
 
 class CaptchaTool
@@ -25,7 +26,7 @@ class CaptchaTool
    {
 	 $this->components['factory'] = new ClassFactory($params);
      // Настройки шаблонизатора
-	 $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params);	
+	 $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params, 'Core');	
 	 
    }
    
@@ -57,8 +58,9 @@ case 2 : { $result = $num1 - $num2; $qs = "$num1 minus $num2"; break; };
 };
 $_SESSION['question'] = $result; // запоминаем
 $key = rand(9999, 99999);
-$qs = urlencode(mcrypt_ecb(MCRYPT_DES, $key, $qs, MCRYPT_ENCRYPT));
-return "<img src='/classes/berkut/image.php?text=$qs&key=$key'/> = ? "; // возвращаем в качестве результата
+$enc = new Encryption();
+$qs = urlencode($enc->encrypt_data($key, $qs));
+return "<img src='/classes/Services/CaptchaTool/image.php?text=$qs&key=$key'/> = ? "; // возвращаем в качестве результата
 } 
 
 
@@ -82,7 +84,7 @@ return ($_POST['answer']==$_SESSION['question']);
 
 function FormCaptcha()
 {
- $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/berkut/captcha.tpl'); 
+ $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Services/CaptchaTool/captcha.tpl'); 
  $this->components['view']->SetVar('CAPTCHA', $this->question());
  $this->components['view']->CreateView();
  return $this->components['view']->GetView();

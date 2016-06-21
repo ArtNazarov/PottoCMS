@@ -28,7 +28,7 @@ function __destruct()
 }
 function mail_form()
 {
-	  $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'mailform.tpl');
+	  $this->components['view']->UseTpl($this->mod_path.'mailform.tpl');
 	  $this->components['view']->SetVar('MTHEME_CAPTION', 'Тема письма');
   	  $this->components['view']->SetVar('MBODY_CAPTION', 'Текст письма');
 	  $this->components['view']->SetVar('FROM_CAPTION', 'Ваш e-mail');

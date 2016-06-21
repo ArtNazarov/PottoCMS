@@ -623,7 +623,7 @@ function ViewOrders()
     $this->components['db']->setTable('trade_operations');
 	 
 	$this->components['db']->Select('operation, dtype, agent, username, status, date ', "$where ORDER BY operation LIMIT $from_page, $articles");
-	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
+	if (mysqli_num_rows($this->components['db']->sql_result)!=0) 
 	{
 	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
@@ -705,7 +705,7 @@ function View()
     $this->components['db']->setTable('trade_sklad');
 	 
 	$this->components['db']->Select('*', "$where ORDER BY description LIMIT $from_page, $articles");
-	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
+	if (mysqli_num_rows($this->components['db']->sql_result)!=0) 
 	{
         $rows = $this->components['db']->Read();
 	foreach ($rows as $i => $data)

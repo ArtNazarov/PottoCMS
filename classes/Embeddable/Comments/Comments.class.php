@@ -58,7 +58,7 @@ function AddComment($aId_page)
 	$id_comment = rand(1, 999999);
 	$this->components['db']->Select('id_comment', "id_comment=$id_comment");
 	}
-	while (mysql_num_rows($this->components['db']->sql_result)!=0);
+	while (mysqli_num_rows($this->components['db']->sql_result)!=0);
 
 	$this->components['db']->Insert('id_comment,  username, id_page, comment, created, rating, status',
 	 "$id_comment, '$aUsername', '$aId_page', '$aComment', '$aCreated', $aRating, $aStatus");
@@ -97,7 +97,7 @@ function GetComments($aId_page)
 	$comments_count = 0;
 	$rating_total = 0;
 	$rating_count = 0;
-	if (mysql_num_rows($this->components['db']->sql_result)!=0) {
+	if (mysqli_num_rows($this->components['db']->sql_result)!=0) {
 	$rows = $this->components['db']->Read();
          foreach ($rows as $index => $data )
 	{
@@ -182,7 +182,7 @@ function admin_com_list()
     $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/items/comslist.tpl');
 	$this->components['db']->setTable('comments');
 	$this->components['db']->Select('comment', '1=1');
-	if (mysql_num_rows($this->components['db']->sql_result)!=0) {
+	if (mysqli_num_rows($this->components['db']->sql_result)!=0) {
   	 $db_page_names = new DatabaseLayer(null);
 	 $db_page_names->Plug();
 	 $db_page_names->setTable('pages');

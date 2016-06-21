@@ -529,7 +529,7 @@ if ( $cc <=0 )
 else
  { 
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.minicart.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.items.tpl');
    $names = $this->GetNamesOfCategories();
    for ($i=1; $i<=$cc; $i++)
      {
@@ -559,7 +559,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.minicart.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);	
@@ -665,7 +665,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 	};	
 	$this->meta = $this->title.' купить в Оренбурге';
 	
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.items.tpl');
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.items.tpl');
     $this->components['db']->setTable('trade_sklad');
 	
 	$this->components['db']->Select('*', " $where");
@@ -676,7 +676,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 	
   
 	
-	if (mysql_num_rows($this->components['db']->sql_result)!=0) 
+	if (mysqli_num_rows($this->components['db']->sql_result)!=0) 
 	{
 		$c = 1;
 	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
@@ -732,7 +732,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 		if ($c > $max_col) {$c = 1; $items .= "</tr>";};
 	}  // end while
 
-      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.table.tpl');
+      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.table.tpl');
 	
 	
 	 // ПАГИНАЦИЯ
@@ -776,7 +776,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 /**
  * \brief Страница с полным описанием изделия.
  * На основании $_GET['artikul'] делает запрос к таблице trade_sklad
- * и заполняет шаблон /classes/shop/shop.item.view.tpl и возвращает
+ * и заполняет шаблон /classes/Separable/Shop/shop.item.view.tpl и возвращает
  * HTML разметку 
  * @return string
  */
@@ -784,7 +784,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 function ViewItemPage()
 {
     
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.item.view.tpl');
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.item.view.tpl');
 $this->components['db']->setTable("trade_sklad");
 $artikul = $_GET['artikul'];
 $this->components['db']->Select("*", "artikul='$artikul'");
@@ -945,8 +945,8 @@ function clearcart()
 /**
  * \brief Форма предзаказа.
  * Возвращает HTML разметку формы предзаказа, заполняя шаблоны
- * /classes/shop/shop.cart.items.tpl и
- * /classes/shop/shop.cart.table.tpl
+ * /classes/Separable/Shop/shop.cart.items.tpl и
+ * /classes/Separable/Shop/shop.cart.table.tpl
  * значениями, согласно записям в $_SESSION['cart']
  * @return string
  */
@@ -962,7 +962,7 @@ else
  { 
    $items = "";
    $names = $this->GetNamesOfCategories();
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.cart.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.cart.items.tpl');
    for ($i=1; $i<=$_SESSION['cart']['count']; $i++)
      {
 		 $this->components['view']->SetVar('NOMER', $i);	
@@ -988,7 +988,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.cart.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.cart.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);	
@@ -998,7 +998,7 @@ else
    
 	 };
 	 
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.predzakaz.editor.tpl');	 
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.predzakaz.editor.tpl');	 
 $this->components['view']->SetVar('FORM_ACTION', 'predzakaz');
 $this->components['view']->SetVar('ACTION_NAME', 'Оформление предзаказа');
 $this->components['view']->SetVar('BUTTON_NAME', 'Отправить предзаказ в магазин');	 
@@ -1063,9 +1063,9 @@ return $this->components['view']->GetView();
 /**
  * \brief Форма предзаказа.
  * На основании $_SESSION['cart'] и шаблонов
- * /classes/shop/shop.predzakaz.notice.items.tpl
+ * /classes/Separable/Shop/shop.predzakaz.notice.items.tpl
  * и 
- * /classes/shop/shop.predzakaz.notice.table.tpl
+ * /classes/Separable/Shop/shop.predzakaz.notice.table.tpl
  * подготавливает уведомление о заказе для администраторов магазина
  * @return string
  */
@@ -1079,7 +1079,7 @@ else
 
  { 
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.predzakaz.notice.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.predzakaz.notice.items.tpl');
    for ($i=1; $i<=$_SESSION['cart']['count']; $i++)
      {
 		 $this->components['view']->SetVar('NOMER', $i);	
@@ -1104,7 +1104,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.predzakaz.notice.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.predzakaz.notice.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);	
@@ -1114,7 +1114,7 @@ else
    
 	 };
 	 
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.predzakaz.notice.tpl');	 
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.predzakaz.notice.tpl');	 
 $this->components['view']->SetVar('FORM_ACTION', 'predzakaz');
 $this->components['view']->SetVar('CART', $cart);
 $this->components['view']->SetVar('AGENT', $_POST['agent']);
@@ -1126,7 +1126,7 @@ return $this->components['view']->GetView();
 /**
  * \brief Форма добавления товара в корзинку.
  * На основании $_GET['artikul'], заполняет шаблон
- * /classes/shop/shop.cart.add.tpl
+ * /classes/Separable/Shop/shop.cart.add.tpl
  * с тем, чтобы пользователь мог задать количество единиц товара.
  * Возвращает в качестве результата HTML форму
  * @return string
@@ -1147,7 +1147,7 @@ $this->components['db']->setTable('trade_sklad');
 		$this->components['view']->SetVar('TYPE', $names[$data['type']]);
 	}	 
 // В корзину
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.cart.add.tpl');	 
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.cart.add.tpl');	 
 $this->components['view']->SetVar('FORM_ACTION', 'addtocart');
 $this->components['view']->SetVar('ACTION_NAME', 'Пожалуйста, укажите количество товара');
 $this->components['view']->SetVar('BUTTON_NAME', 'Положить товар в корзину');
@@ -1183,7 +1183,7 @@ return $this->components['view']->GetView();
  function Search()
  {
 
-  $this->components['search']->SearchInTable('trade_sklad')->OutToTpl('/classes/shop/shop.search.items.tpl')->OfColsCount(3);
+  $this->components['search']->SearchInTable('trade_sklad')->OutToTpl('/classes/Separable/Shop/shop.search.items.tpl')->OfColsCount(3);
   $this->components['search']->UsingKeyForTitle('captiontxt')->UsingKeyForSearch( array('description', 'captiontxt'));
   
   $this->components['search']->ViewOptions(
@@ -1369,12 +1369,12 @@ return $this->components['view']->GetView();
  
  /**
   * \brief Форма поиска по ценам.
-  * Считывает форму поиска по ценам из шаблона /classes/shop/shop.pricefinder.tpl
+  * Считывает форму поиска по ценам из шаблона /classes/Separable/Shop/shop.pricefinder.tpl
   * @return string
   */
  function PriceFinder()
  {
-    return $this->components['view']->PasteFile($_SERVER['DOCUMENT_ROOT'].'/classes/shop/shop.pricefinder.tpl');	
+    return $this->components['view']->PasteFile($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.pricefinder.tpl');	
  }
  
  /**

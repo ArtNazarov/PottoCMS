@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `demosite__blocks` (
   `blockdescription` text CHARACTER SET utf8 NOT NULL,
   `blockview` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`blockname`)
-) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `demosite__blocks`
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `demosite__styles` (
   `stylename` varchar(255) CHARACTER SET utf8 NOT NULL,
   `styledescription` text CHARACTER SET utf8 NOT NULL,
   `styleview` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `demosite__trade_sklad_calls` (
   `callmsg` text CHARACTER SET utf8 NOT NULL,
   `calldt` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`callid`)
-) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -331,3 +331,19 @@ CREATE TABLE IF NOT EXISTS `demosite__users` (
 
 INSERT INTO `demosite__users` (`user`, `ukey`, `role`, `online`) VALUES
 ('admin', 'd7ace43aa761e31d0fe19ae0cd7dea68', 'admin', 0);
+
+CREATE TABLE IF NOT EXISTS `demosite__translations` (
+  `id` varchar(32) NOT NULL,
+  `lang` varchar(34) NOT NULL,
+  `caption` text NOT NULL,
+  `body` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `demosite__voc` (
+  `lang` varchar(255) NOT NULL,
+  `orig` varchar(255) NOT NULL,
+  `wrd` varchar(255) NOT NULL,
+  PRIMARY KEY (`orig`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

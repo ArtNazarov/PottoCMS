@@ -421,7 +421,7 @@ else
          $this->Vavilon();
          $this->components['db']->Done();
 	 $this->components['view']->Publish();
-         $this->components['log']->MyLog('Pages', 'viewpage end');
+         $this->MyLog('Pages', 'viewpage end');
 	}
 
         function GetTranslationsLinks($id)
@@ -546,7 +546,7 @@ if ($c > $cols) {$t .= "</tr>"; $c = 1;};
 
      $template = $_SERVER['DOCUMENT_ROOT'].$this->components['categoryitem']->cat_template;
 	 if ($template==$_SERVER['DOCUMENT_ROOT'])
-	 {$template=$_SERVER['DOCUMENT_ROOT'].'/templates/readers/simple.tpl';};
+	 {$template=$_SERVER['DOCUMENT_ROOT'].'/templates/readers/bootstrap.tpl';};
 	 $this->components['view']->SetVar('DEBUG_INFO', 'Запросов:'.$this->total_queries()." Шаблон ".$template);
      $this->components['view']->UseTpl($template);
 
@@ -663,7 +663,7 @@ if ($c > $cols) {$t .= "</tr>"; $c = 1;};
 	// Склад
 	function skladpage()
 	{
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/readers/simple.tpl');	
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/readers/bootstrap.tpl');	
 	$human= $this->system['username'];	
 	$role = $this->system['usergroup'];
 	if ($role == "seller")	

@@ -183,7 +183,7 @@ if (($params['db']!=null) && (is_object($params['db'])))
 /**
  * \brief Форма поиска.
  * Возвращает HTML-строку с кодом формы для поиска,
- * заполняя шаблон /classes/scorpio/scorpio.search.form.tpl
+ * заполняя шаблон /classes/Helpers/SearchTool/scorpio.search.form.tpl
  * @param string $url - путь к обработчику запроса
  * @param string $button_name - имя кнопки
  * @return string
@@ -191,7 +191,7 @@ if (($params['db']!=null) && (is_object($params['db'])))
 function SearchForm($url, $button_name)
 {
   
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/scorpio/scorpio.search.form.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/SearchTool/scorpio.search.form.tpl');
    $this->components['view']->SetVar('URL', $url);
    $this->components['view']->SetVar('BUTTON_NAME', $button_name);   
    $this->components['view']->CreateView();
@@ -296,7 +296,7 @@ if ($c > $this->colsinview)
 
 };
 $items .= '</table>';
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/scorpio/scorpio.search.result.tpl');
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/SearchTool/scorpio.search.result.tpl');
 $this->components['view']->SetVar('REQUEST', $q);
 $this->components['view']->SetVar('ITEMS', $items);
 $this->components['view']->SetVar('FINDED', 'Результов всего: '.$items_count . " показано товаров ". $this->items_per_page . " Страниц в выдаче: ". $pages_count);

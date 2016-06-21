@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex"/>
 <title>~TITLE~</title>
 	<link rel="stylesheet" type="text/css" href="/templates/admin/menu.css" >  
-    <link href="/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="/plugins/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">		
+    <link href="/vendors/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="/vendors/plugins/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">		
 	<style>
 #adm_footer
 {
@@ -74,19 +74,18 @@ table.cp tr:hover
     </div> <!-- /container -->
     
    
- 
-	<script src="/plugins/js/jquery.js"></script>    
-    <script src="/plugins/bootstrap/assets/bootstrap-transition.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-alert.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-modal.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-dropdown.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-scrollspy.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-tab.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-tooltip.js"></script>
-    <script src="j/plugins/bootstrap/assets/bootstrap-popover.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-button.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-collapse.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-carousel.js"></script>
-    <script src="/plugins/bootstrap/assets/bootstrap-typeahead.js"></script>   
+    <script src="/vendors/plugins/js/jquery.js"></script>    
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-transition.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-alert.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-modal.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-dropdown.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-scrollspy.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tab.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tooltip.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-popover.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-button.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-collapse.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-carousel.js"></script>
+    <script src="/vendors/plugins/bootstrap/assets/bootstrap-typeahead.js"></script>   
 </body>
 </html>

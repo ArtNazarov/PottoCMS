@@ -29,6 +29,7 @@ var $components; // Фабрика классов
          {
          $this->components['view']->SetVar('ADM_SPEC_INFO', 'Защита включена! ' . $pr_links);
          };
+         
 	}
 function __destruct()
 {
