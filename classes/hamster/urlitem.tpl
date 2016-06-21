@@ -1,1 +1,0 @@
-<url><loc>~URL~</loc><changefreq>~FREQ~</changefreq></url>

@@ -1,1 +1,0 @@
-От кого - ~FROM~ : ~TEXT~ [<a href="/pm/openpm/~ID_PM~">открыть...</a>] [~READED~] <br/>

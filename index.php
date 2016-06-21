@@ -1,8 +1,7 @@
 <?php 
 define('APP', 0);
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/masterfactory/masterfactory.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/Core/ClassFactory/ClassFactory.class.php';
 $f = null;
-$f = new MasterFactory($f);
-$readers = $f->createInstance("Application", $params);
-$readers->Run('Jerboa', 'run')
-?>
+$f = new ClassFactory($f);
+$readers = $f->createInstance("Application", $params, 'Core');
+$readers->Run('PagesApplication', 'run', 'Separable');

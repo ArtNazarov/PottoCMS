@@ -1,1 +1,0 @@
-Решите пример ~CAPTCHA~ <input type="text" name="answer" id="answer" size="3" /> <br/>

@@ -1,1 +1,0 @@
-<a href="~URL~">~TITLE~</a><br/><br/>
