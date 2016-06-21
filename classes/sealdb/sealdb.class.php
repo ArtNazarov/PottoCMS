@@ -24,6 +24,24 @@ class SealDB
 	var $log = null; // Лог sql запросов!
 	var $prefix = DB_PREFIX; // Префикс таблицы
 	var $components;
+        var $recordset;
+        var $precord;
+        
+        
+        function readCursor()
+        {
+            return $this->recordset[$this->precord];
+        }
+        
+        function first()
+        {
+           $this->precord = 0;
+        }
+        
+        function next()
+        {
+            $this->precord++;
+        }
         
         
 	function __construct($params)
@@ -39,6 +57,7 @@ class SealDB
 	$this->components['view'] = $this->components['factory']->createInstance("Lorius", $params);
         $this->log = new Duck($params);
         $this->log->WriteLog('sql', "sealdb started");
+        $this->precord = 0;
 	}
 	
 /*
@@ -77,7 +96,7 @@ function sql_protector($text)
  */
     function CheckConnention()
 	{
-     if (connection_status()!=0) { $this->Plug(); };
+     if ($this->connection_status()!=0) { $this->Plug(); };
 	}
 
 /*
@@ -87,7 +106,7 @@ function sql_protector($text)
  */        
 	function Read()
 	{                
-		return mysqli_fetch_assoc($this->sql_result);
+		return $this->recordset;
 	}
 /*
  * Устанавливает подключение к базе данных.
@@ -103,7 +122,7 @@ $this->db_link = mysqli_connect(
         $this->db_password);
 
 if (!$this->db_link) {
-    die("Database connection failed: " . mysqli_error());
+    die("Database connection failed: " . mysqli_error($this->db_link));
 }            
             
 if (false == $this->db_link)        
@@ -180,27 +199,38 @@ if (false == $this->db)
  */
 	function Done()
 	{
-		mysqli_close($this->db_link);		
+		mysqli_close($this->db_link) || die(mysqli_error($this->db_link));		
                 $this->log->WriteLog('sql', "call mysql_close \n ");		
 	}
 /*
  * Выполняет SQL запрос к базе данных
  */        
 	function SQL($aQuery)        
-	{
+	{                
 		$this->CheckConnention(); 
 		$this->query_counter++;
 		$this->log->WriteLog('sql', 'exec query '.$this->query." \n ");		                
-		$this->sql_result = mysqli_query($this->db_link, $aQuery) or die("ERROR: ".mysqli_error($this->db_link));
+		$this->sql_result = mysqli_query($this->db_link, $aQuery, MYSQLI_USE_RESULT) or die("ERROR: ".mysqli_error($this->db_link));
                 if (is_object($this->sql_result))
                 {
                   $this->log->WriteLog('sql', '[OK] query '.$aQuery);
+                  $this->log->WriteLog('sql', "Rows {$this->sql_result->num_rows}");
+                  
+                  
+                   $this->recordset = [];
+                   $this->precord = 0;
+                  while ($row = $this->sql_result->fetch_array(MYSQLI_ASSOC)) {                        
+                   array_push($this->recordset, $row);                      
+                  }
+                  
+                  
+                  
                 }
                 else
                 {
                     $this->log->WriteLog('sql', '[FAILED] query '.$aQuery);
                 };
-                
+                //$this->Done();
 	}
 /*
  * Назначает рабочую таблицу
@@ -346,9 +376,14 @@ if (false == $this->db)
          */
 	function __destruct()
 	{           
-           if (connection_status()!=0) {$this->Done();};
+           if ($this->connection_status()!=0) {$this->Done();};
            $this->log->WriteLog('sql', "sealdb destructor called");
 	}
+        
+        function connection_status()
+        {
+           return (!$this->db_link);
+        }
 
 }
 
