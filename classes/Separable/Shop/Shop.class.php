@@ -794,7 +794,7 @@ $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/
 $this->components['db']->setTable("trade_sklad");
 $artikul = $_GET['artikul'];
 $this->components['db']->Select("*", "artikul='$artikul'");
-$data = $this->components['db']->Read();
+$data = $this->components['db']->Read()[0];
 // Статистика просмотров		
 	$v = $data['visitors'] + 1; 
 	
