@@ -79,7 +79,7 @@
 
 	
     
-    <script src="/vendors/plugins/js/jquery.js"></script>    
+    <script src="/vendors/plugins/jquery/jquery.js"></script>    
     <script src="/vendors/plugins/bootstrap/assets/bootstrap-transition.js"></script>
     <script src="/vendors/plugins/bootstrap/assets/bootstrap-alert.js"></script>
     <script src="/vendors/plugins/bootstrap/assets/bootstrap-modal.js"></script>
