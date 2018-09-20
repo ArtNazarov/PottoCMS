@@ -13,7 +13,7 @@ class UserAuth
         {
         $this->components = null;
         $this->components['factory'] = new ClassFactory($params); // Фабрика классов
- // Настройки базы данных
+ // Настройки базы данныx   x   х
 if (($params['db']!=null) && (is_object($params['db'])))
      { // Не создаем новый объект базы данных, используем переданный
      $this->components['db'] = &$params['db'];

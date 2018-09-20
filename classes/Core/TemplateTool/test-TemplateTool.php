@@ -1,6 +1,6 @@
 <?php
 define('APP', 0);
-var $mod_path = __DIR__ . '/';
+$mod_path = __DIR__ . '/';
 require_once $mod_path . '/TemplateTool.class.php';
 
 $p = null;

@@ -148,6 +148,8 @@ if (($params['db']!=null) && (is_object($params['db'])))
 	$this->components['cache'] = $this->components['factory']->createInstance("CacheLayer", $params, 'Core'); // Кэш
         $this->components['usr'] = $this->components['factory']->createInstance("UserAuth", $params, 'Services'); // Кэш
         $this->components['gb'] = $this->components['factory']->createInstance("GlobalBlocksController", $params, 'Controllers'); // Глобальные блоки
+        $this->components['log'] = $this->components['factory']->createInstance("Log", $params, 'Core'); // Лог
+
    	$this->title = ' обработка запроса... ';
 	$this->meta = ' обработка запроса... ';
 }
@@ -1386,8 +1388,9 @@ return $this->components['view']->GetView();
   */
  function run()
  {
-	 
+         $this->components['log']->WriteLog('Shop', 'run');
 	 $action = $_GET['action'];
+         $this->components['log']->WriteLog('Shop', 'action - ' . $action);
 	 switch ($action)
 	 {
 		

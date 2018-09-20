@@ -34,7 +34,7 @@ if (($params['db']!=null) && (is_object($params['db'])))
 	$this->components['db']->Plug();
 	$this->components['view'] = $this->components['factory']->createInstance("TemplateTool", $params, 'Core'); // Подключаем шаблонизатор
 	$this->components['options'] = $this->components['factory']->createInstance("CommonSettings", $params); // Подключаем общие настройки сайта
-        $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params); // Подключаем капчу
+        $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params, 'Services'); // Подключаем капчу
 }
 function __destruct()
 {

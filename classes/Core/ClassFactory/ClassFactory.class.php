@@ -27,8 +27,9 @@ function createInstance($aClass, &$params, $aCategory='base')
 		}
 		else
 			{
-			echo "Не удалось найти файл класса $aClass";
-                        echo " по пути $class_path";
+			echo "Не удалось найти файл класса $aClass<br/>";
+                        echo " по пути $class_path<br/>";
+                        echo 'error in function ClassFactory->createInstance<br/>';
 			exit;
 			die();
 			};

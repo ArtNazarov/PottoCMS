@@ -1,5 +1,7 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . '/classes/Core/Autoloader/Autoloader.class.php');
+//$autoloader = new Autoloader();
+//$autoloader->walk();
 class Application
 {
  var $components;
@@ -21,7 +23,7 @@ class Application
     function run($class, $method, $category)
     {    	
 session_start();
-$not_admin_class = ($class !== 'Colibri');	
+$not_admin_class = ($class !== 'AdminTools');	
 $usr_role = $this->components['usr']->GetRoleFS();
 $admin_session = ($usr_role=='admin') or ($usr_role=='seller');
 $ukey = "guest";
@@ -52,8 +54,9 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/iofilters/filterio.php'
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/iofilters/filtervars.php'; // ФИЛЬТРЫ ПЕРЕМЕННЫХ
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php'; // ФАБРИКА КЛАССОВ
 $f = new ClassFactory($params);
-$site = $f->createInstance($class, $params, $category);
-$site->$method(); // Замер производительности
+$site = $f->createInstance($class, 
+        $params, $category);
+$site->run(); // Замер производительности
 $time_end = microtime(true); // ЗАВЕРШЕНИЕ СЦЕНАРИЯ
 $wt = $time_end - $time_start;
 $log = $f->createInstance('Log', $params);

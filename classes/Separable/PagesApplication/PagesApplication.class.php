@@ -1,5 +1,5 @@
 <?php // Классы
-if (!defined('APP')) {die('ERROR pages.class.php');};
+//if (!defined('APP')) {die('ERROR pages.class.php');};
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
 
 
@@ -949,7 +949,11 @@ $this->components['usr']->UserRegistration();
 			};
 		  		  
 		  case "sklad" :  {$this->skladpage(); break;}
-    	  case "shop" :  {$this->shoppage(); break;}
+    	  case "shop" :  {
+              $this->components['log']->WriteLog('Pages', 'call shoppage');
+              $this->shoppage(); break;
+          
+          }
 		  case "forum" :  {$this->forum(); break;}
 		  
 		};
@@ -958,6 +962,7 @@ $this->components['usr']->UserRegistration();
 
 	function doAction($aTask)
 	{
+                $this->components['log']->WriteLog('Pages', 'New task ' . $aTask);
 		$this->secaction($aTask);
 		$this->NormalActions($aTask);
 	}

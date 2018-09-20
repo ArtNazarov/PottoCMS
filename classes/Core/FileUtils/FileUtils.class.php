@@ -1,10 +1,11 @@
 <?php
-if (!defined('APP')) {die('ERROR');};
+
 class FileUtils
 {
       function __construct($params)
       {
-          
+                   //echo "Вход в FileUtils->__construct()<br/>";  
+                   //echo "Выход из FileUtils->__construct()<br/>"; 
       }
       function DoubleDots($path)
       {

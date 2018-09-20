@@ -3,7 +3,7 @@ if (!defined('APP')) {die('ERROR');};
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/TemplateTool/TemplateTool.class.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/collections/widgets.collection.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Cire/FileUtils/FileUtils.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/FileUtils/FileUtils.class.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/CacheLayer/CacheLayer.class.php';
 
 class AdminFileManagerTool extends FileUtils

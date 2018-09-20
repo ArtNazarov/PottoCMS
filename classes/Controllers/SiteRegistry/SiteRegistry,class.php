@@ -16,6 +16,7 @@ var $ui;  // Интерфейс
 
 function __construct($params)
 {
+    //echo "Создан SiteRegistry!<br/>";
 		$this->components = null;
 		$this->components['factory'] = new ClassFactory($params);
         $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params, 'Core');

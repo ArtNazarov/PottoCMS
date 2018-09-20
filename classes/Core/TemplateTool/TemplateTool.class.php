@@ -1,5 +1,5 @@
 <?php  mb_internal_encoding("UTF-8"); // База данных и тексты должны быть в UTF-8
-if (!defined('APP')) {die('ERROR TemplateTool.class.php');};
+//if (!defined('APP')) {die('ERROR TemplateTool.class.php');};
 class TemplateTool
 {
 	var $tpl_file; // Указатель на файл шаблона
@@ -11,6 +11,7 @@ class TemplateTool
 	var $tpl_view; // Вид страницы
 	function __construct($params)
 	{
+// echo "Создаю объект шаблонизатор<br/>";
  $tpl_file = null; // Указатель на файл шаблона
  $tpl_filename = ''; // Имя файла шаблона
  $template = ''; // Шаблон

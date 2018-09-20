@@ -1,6 +1,6 @@
 <?php
-if (!defined('APP')) {die('ERROR usergroups.class.php');};
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/ClassFactory/ClassFactory.class.php';
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
 
 class UserGroups
 {
@@ -16,11 +16,13 @@ var $ui;  // Интерфейс
 
 function __construct($params)
 {
+                //echo "Вход в UserGroups->_construct";
 		$this->components = null;
 		$this->components['factory'] = new ClassFactory($params);
         $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params, 'Core');
         $this->components['db'] =  $this->components['factory']->createInstance("DatabaseLayer", $params, 'Core');
 		$this->components['db']->Plug();
+                //echo "Выход из UserGroups->_construct";
 }
 
 function FillRole()

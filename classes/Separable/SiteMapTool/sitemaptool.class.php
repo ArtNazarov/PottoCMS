@@ -1,9 +1,8 @@
 <?php // Генератор карты сайта sitemap.xml
-if (!defined('APP')) {die('ERROR SiteMapTool.class.php');};
 // Для базы
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/DatabaseLayer/DatabaseLayer.class.php';
 // Для шаблонов
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/TemplateTool/TemplateTool.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/TemplateTool/TemplateTool.class.php';
 class SiteMapTool
 {
  var $m;

@@ -1,12 +1,13 @@
 <?php
-if (!defined('APP')) {die('ERROR');};
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/FileUtils/FileUtils.class.php';
 class Log extends FileUtils
 {            
     var $ignore = array();
     function __construct($params)
 {
+        // echo "Вход в Log->__construct()<br/>"; 
          parent::__construct($params);
+         //echo "Выход из Log->__construct()<br/>";
 }
         
         function GetPath($aFileName, $cat)

@@ -9,6 +9,7 @@ var $components; // Фабрика классов
 
 	function __construct($params)
 	{
+           // echo "Класс админки конструируется<br>";
 		$this->components = null;
 		$this->components['factory'] = new ClassFactory($params);
 
@@ -29,6 +30,8 @@ var $components; // Фабрика классов
          {
          $this->components['view']->SetVar('ADM_SPEC_INFO', 'Защита включена! ' . $pr_links);
          };
+         //echo "Конструктор админки выполнен<br/>";
+         
          
 	}
 function __destruct()
@@ -169,6 +172,7 @@ function clear_cache_folders()
 			// Заполнение формы для входа
 			case 'logform' :
   		    {
+                        //echo "Подготавливаем форму входа";
 			$this->components['security']->AdminLogForm();
 			exit;
 			}
@@ -185,6 +189,7 @@ function clear_cache_folders()
 
 	function Unknown()
     {
+            echo "test";
 		$this->components['sitemap']->CreateSitemap();
 	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/colibri.tpl');
 	 $this->components['view']->SetGlobal('admin_menu', $_SERVER['DOCUMENT_ROOT'].'/templates/admin/global/adminmenu.tpl');
@@ -245,15 +250,20 @@ function clear_cache_folders()
    	 case 'logs' : { $this->actionusers(); break; };
 	 case 'clearcachefolders' : {$this->clear_cache_folders(); break;};
 	 case 'sitemap' : { $this->sitemap(); break; };
-	 default : {$this->Unknown();};
+	 default : {echo "Неизвестное действие!"; $this->Unknown();};
+         
+         
  };
 	}
 	function getAction()
 	{
-		return $_GET['do'];
+                //echo "Узнаем таск";
+                $aTask = $_GET['do'];
+		return $aTask;
 	}
-	function Run()
+	function run()
 	{
+         //echo "Запущен контроллер!";
 	 $this->action($this->getAction());
 	}
 }

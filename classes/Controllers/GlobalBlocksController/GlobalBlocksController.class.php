@@ -9,6 +9,7 @@ class GlobalBlocksController
 var $components;
 function __construct(&$params)
 {
+   // echo "Вход в конструктор глобальных блоков<br/>";
 	$this->components = null;
     $this->components['factory'] = new ClassFactory($params);
     // Настройки базы данных
@@ -22,6 +23,7 @@ if (($params['db']!=null) && (is_object($params['db'])))
  	 };
 	$this->components['db']->Plug();
 	$this->components['view'] = $this->components['factory']->createInstance("TemplateTool", $params, 'Core'); // Подключаем шаблонизатор	
+//echo "Выход из конструктора глобальных блоков<br/>";        
 }
 function __destruct()
 {
@@ -127,6 +129,8 @@ function view() // Просмотр списка блоков
  $view = $this->components['view']->GetView();
  return $view;
 }
+
+
 
 
 }

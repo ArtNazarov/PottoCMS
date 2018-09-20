@@ -1,6 +1,6 @@
 <?php
 if (!defined('APP')) {die('ERROR');};
-require_once $_SERVER['DOCUMENT_ROOT'].'/classes/ClassFactory/ClassFactory.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
 /** 
  *  Использует таблицу galleries
  * id gcaption gpath
@@ -13,8 +13,8 @@ class Gallery
     function __construct($params)
     {
         $this->components['factory'] = new ClassFactory($params);
-        $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params);	
-        $this->components['usr'] =  $this->components['factory']->createInstance("Meerkat", $params);	
+        $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params, 'Core');	
+        $this->components['usr'] =  $this->components['factory']->createInstance("UserAuth", $params, 'Services');	
         $this->components['db'] =  $this->components['factory']->createInstance("DatabaseLayer", $params, 'Core');	
         $this->components['db']->Plug();
         $username =  $this->components['usr']->GetUserNameFromSession();

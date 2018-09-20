@@ -1,5 +1,4 @@
 <?php
-if (!defined('APP')) {die('ERROR DatabaseLayer.class.php');};
 /*
  * В файле sysconst.php определены константы для подключения к базе данных
  */
@@ -46,6 +45,9 @@ class DatabaseLayer
         
 	function __construct($params)
 	{
+            //echo "Вход в DatabaseLayer->__construct()<br/>";
+            try {
+            //echo "Создаю объект базы данных<br/>";
 		$this->query_counter = 0;
   	        $this->query = 0;
 		$this->log = new Log($params);
@@ -58,6 +60,12 @@ class DatabaseLayer
         $this->log = new Log($params);
         $this->log->WriteLog('sql', "DatabaseLayer started");
         $this->precord = 0;
+            } catch (Exception $e){
+                echo "Проблема с classes\Core\DatabaseLayer<br/>";
+                echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
+            }
+                      //echo "Выход в DatabaseLayer->__construct()<br/>";
+
 	}
 	
 /*
