@@ -1014,7 +1014,7 @@ else
 	$artikul = $_SESSION['cart']["item".$i]['artikul'];
 	$this->components['db']->Select(' * ', "artikul='$artikul'");
 
-	$data = $this->components['db']->Read();
+	$data = $this->components['db']->Read()[0];
 	
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
      	$this->components['view']->SetVar('DESCRIPTION', $data['captiontxt']);
