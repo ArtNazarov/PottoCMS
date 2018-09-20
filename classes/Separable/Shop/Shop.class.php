@@ -531,7 +531,7 @@ if ( $cc <=0 )
 else
  { 
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/shop/shop.minicart.items.tpl');
    $names = $this->GetNamesOfCategories();
    for ($i=1; $i<=$cc; $i++)
      {
@@ -541,10 +541,14 @@ else
 		 // Узнаем информацию о товаре из базы	 
 		 $this->components['db']->setTable('trade_sklad');
 	$artikul = $_SESSION['cart']["item".$i]['artikul'];
+  
+  
+  
 	$this->components['db']->Select('*', "artikul='$artikul'");
-
-	$data = $this->components['db']->Read();
-	
+ 
+	$data = $this->components['db']->Read()[0];
+	//print_r($data);
+  
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
      	$this->components['view']->SetVar('DESCRIPTION', $data['captiontxt']);
 		$this->components['view']->SetVar('TYPE', $names[$data['type']]);
@@ -561,7 +565,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/shop/shop.minicart.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);	
@@ -890,44 +894,79 @@ return $view;
 
 // ----------------- ЛОГИКА
 
+function in_cart_item($i){
+  return $_SESSION['cart']["item".$i]["artikul"];
+}
+
+function reg_in_session($artikul, $count){
+  $_SESSION['cart']['count'] = $_SESSION['cart']['count'] + 1; // Увеличить число товаров в корзине
+  $nomer = $_SESSION['cart']['count'];
+	$_SESSION['cart']["item".$nomer]['artikul'] = $artikul;
+	$_SESSION['cart']["item".$nomer]['count'] = $count;
+}
+
+function inc_in_session($found, $count){
+    // Увеличить на $_POST['count'] запись о товаре в $_SESSION['cart']["item".$found]['count']
+ $_SESSION['cart']["item".$found]['count'] = $_SESSION['cart']["item".$found]['count'] + $count;
+}
+
+function debug_session_info(){
+  $str = "";
+  $count = $_SESSION['cart']['count'];
+  for($i=1;$i<=$count;$i++){
+     $artikul = $_SESSION['cart']['item'.$i]['artikul'];
+     $count = $_SESSION['cart']['item'.$i]['count'];
+     $str = $str . " $i $artikul $count \n\r";
+  };
+  file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/sessionState.log', $str);
+}
+
 /**
  * \brief Вносит товар в корзинку покупателя и уведомляет об этом
  * Добавляет запись о товаре в массив $_SESSION['cart']["item".$i]["artikul"]
  * @return string 
  */
 function addtocart()
-{
-$_POST['count'] = isInt($_POST['count']);
+{  
+
+
+
+$artikul = $_POST['artikul'];
+$item_count  = isInt($_POST['count']);
+$items_in_cart = $_SESSION['cart']['count'];
 if ($_POST['count'] !== false)
 {
-$found = 0;
- for ($i=1; $i<=$_SESSION['cart']['count']; $i++)
+ // Поиск по корзине
+ $found = 0;
+ for ($i=1; $i<=$items_in_cart ; $i++)
  {
- if ($_POST['artikul'] == $_SESSION['cart']["item".$i]["artikul"])
+ if ($artikul == $this->in_cart_item($i))
    {
      $found = $i;
 	 break;
    };
  };
+ 
  if ($found==0)
  {
-	$_SESSION['cart']['count'] = $_SESSION['cart']['count'] + 1; // Увеличить число товаров в корзине
-    $nomer = $_SESSION['cart']['count'];
-	$_SESSION['cart']["item".$nomer]['artikul'] = $_POST['artikul'];
-	$_SESSION['cart']["item".$nomer]['count'] = $_POST['count'];
+	$this->reg_in_session($artikul, $item_count);
+  $this->debug_session_info();
 }
 else
  {
-    // Увеличить на $_POST['count'] запись о товаре в $_SESSION['cart']["item".$found]['count']
- $_SESSION['cart']["item".$found]['count'] = $_SESSION['cart']["item".$found]['count'] + $_POST['count'];
+  $this->inc_in_session($found, $item_count);
+  $this->debug_session_info();
  }
-	return "Товар добавлен. Перейти к <a href='/shop/buyer/fpredzakaz'>оформлению предзаказа</a> или <a href='/shop/view'>продолжить покупки?</a>";		
+	return "Товар $artikul добавлен. Перейти к <a href='/shop/buyer/fpredzakaz'>оформлению предзаказа</a> или <a href='/shop/view'>продолжить покупки?</a>";		
 }
 else
 {
-        $artikul = $_POST['artikul'];
+      
         return "Опечатка в количестве товара...<a href='/shop/buyer/faddtocart/$artikul'>попробуйте снова</a>";		    
 };
+
+
+
 }
  
 /**
