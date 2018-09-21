@@ -42,7 +42,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
       }
       function getLastDataID(){
           $this->components['db']->setTable($this->api_data);
-          $this->components['db']->Select('COUNT(*) as cnt', '1=1');
+          $this->components['db']->Select('MAX(id) as cnt', '1=1');
           $data = $this->components['db']->Read()[0];
           return $data['cnt']+1;
       }
@@ -58,6 +58,22 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
           $result = ['result' => TRUE, 'id' => $id];
         } else { 
         $result = ['result' => FALSE, 'id' => -1];
+        }
+          header('Content-Type: application/json;charset=utf-8');
+          echo json_encode($result);
+      }
+      function UpdateData(){
+        $user = $_GET['user'];
+        $crc = $_GET['crc'];
+        $code = $_GET['code'];
+        $posted_data = $_GET['data'];
+        $id = $_GET['id'];
+        if ($crc == $this->getRealCrc($user, $code)){
+          $this->components['db']->setTable($this->api_data);
+          $this->components['db']->Update("data='$posted_data'", " (id=$id) AND (user='$user') ");
+          $result = ['result' => TRUE];
+        } else { 
+        $result = ['result' => FALSE];
         }
           header('Content-Type: application/json;charset=utf-8');
           echo json_encode($result);
@@ -102,11 +118,30 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
           header('Content-Type: application/json;charset=utf-8');
           echo json_encode($result);
       }
+      function delData(){
+        $user = $_GET['user'];
+        $crc = $_GET['crc'];
+        $code = $_GET['code'];
+        $id = $_GET['id'];
+        if ($crc == $this->getRealCrc($user, $code)){
+          $this->components['db']->setTable($this->api_data);
+          $this->components['db']->Delete(" (id=$id) AND (user='$user') ");
+           $result = ['result' => TRUE];
+        }
+         else {
+           $result = ['result' => FALSE];
+         }
+          header('Content-Type: application/json;charset=utf-8');
+          echo json_encode($result);
+      }
+      
       function run(){
           isset($_GET['action']) ? $action = $_GET['action'] : $action = 'no_action';
           switch ($action){
               case 'get' : {$this->GetData(); break;}
               case 'post' : {$this->PostData(); break;}
+              case 'update' : {$this->UpdateData(); break;}
+              case 'delete' : {$this->delData(); break;}
               case 'get-all' : {$this->GetAllData(); break;}
               case 'no_action' : {
                   $result = ['result'=>FALSE, 'msg'=>'define ?action=param'];
