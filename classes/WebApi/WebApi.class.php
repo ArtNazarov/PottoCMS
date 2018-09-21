@@ -76,8 +76,24 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
         $id = $_GET['id'];
         if ($crc == $this->getRealCrc($user, $code)){
           $this->components['db']->setTable($this->api_data);
-          $this->components['db']->Select('*', "user='$user'");
+          $this->components['db']->Select('*', " (user='$user') AND (id=$id) ");
           $data = $this->components['db']->Read()[0];
+           $result = ['result' => TRUE, 'data' => $data];
+        }
+         else {
+           $result = ['result' => FALSE, 'data' => []];
+         }
+          header('Content-Type: application/json;charset=utf-8');
+          echo json_encode($result);
+      }
+      function GetAllData(){
+        $user = $_GET['user'];
+        $crc = $_GET['crc'];
+        $code = $_GET['code'];
+        if ($crc == $this->getRealCrc($user, $code)){
+          $this->components['db']->setTable($this->api_data);
+          $this->components['db']->Select('*', "user='$user'");
+          $data = $this->components['db']->Read();
            $result = ['result' => TRUE, 'data' => $data];
         }
          else {
@@ -91,6 +107,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
           switch ($action){
               case 'get' : {$this->GetData(); break;}
               case 'post' : {$this->PostData(); break;}
+              case 'get-all' : {$this->GetAllData(); break;}
               case 'no_action' : {
                   $result = ['result'=>FALSE, 'msg'=>'define ?action=param'];
                   header('Content-Type: application/json;charset=utf-8');
