@@ -27,7 +27,7 @@ if (($params['db']!=null) && (is_object($params['db'])))
          $this->components['view'] = $this->components['factory']->createInstance("TemplateTool", $params, 'Core');
          $this->components['log'] = $this->components['factory']->createInstance("Log", $params, 'Core');
          $this->components['formitems'] = $this->components['factory']->createInstance("FormItems", $params, 'Core');
-         $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params, 'Services');
+        // $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params, 'Services');
          $this->components['var_cache'] = $this->components['factory']->createInstance("CacheLayer", $params, 'Core');
 	 $this->components['var_cache']->lifetime = 600;
         }
@@ -47,7 +47,9 @@ if (($params['db']!=null) && (is_object($params['db'])))
         if ( isset($_SESSION['ukey'])  )
 		  { $ukey = $_SESSION['ukey']; }
 		else {$ukey = ""; };
-        $username = $this->components['db']->getCell('user', "ukey='$ukey'");
+        $this->components['db']->Select('user', "ukey='$ukey'");
+        $data = $this->components['db']->Read()[0];
+        $username = $data['user'];
         return $username;
 }	
 
@@ -57,7 +59,9 @@ if (($params['db']!=null) && (is_object($params['db'])))
         if ( isset($_SESSION['ukey'])  )
 		  { $ukey = $_SESSION['ukey']; }
 		else {$ukey = ""; };
-        $role = $this->components['db']->getCell('role', "ukey='$ukey'");
+        $this->components['db']->Select('role', "ukey='$ukey'");
+        $data = @$this->components['db']->Read()[0];
+        $role = $data['role'];
         return $role;
 }	
 
@@ -238,7 +242,9 @@ function GetUsernameFromSession()
 		if ($this->components['var_cache']->failed($cache)==true)
 		{
 		$this->components['db']->setTable('users');
-        $username = $this->components['db']->getCell('user', "ukey='$ukey'");
+                $this->components['db']->Select('user', "ukey='$ukey'");
+                $data = $this->components['db']->Read()[0];
+                $username = $data['user'];        
 		$this->components['var_cache']->save($cache, $username);
 		}
 		else
@@ -412,7 +418,8 @@ function AdminLoginFailMsg() // Сообщение в админке о неуд
          $this->components['view']->SetVar('ACTION', 'login');
          $this->components['view']->SetVar('ACTION2', 'regform');
          $this->components['view']->SetVar('TLINK2', 'Зарегистрироваться');
-		 $this->components['view']->SetVar('CAPTCHA', $this->components['captcha']->FormCaptcha());
+         // $this->components['view']->SetVar('CAPTCHA', $this->components['captcha']->FormCaptcha());
+         $this->components['view']->SetVar('CAPTCHA', '');
          $this->components['view']->CreateView();
          $this->components['view']->Publish();
         }
@@ -426,7 +433,8 @@ function AdminLoginFailMsg() // Сообщение в админке о неуд
          $this->components['view']->SetVar('ACTION', 'register');
          $this->components['view']->SetVar('ACTION2', 'logform');
          $this->components['view']->SetVar('TLINK2', 'Войти');
-		 $this->components['view']->SetVar('CAPTCHA', $this->components['captcha']->FormCaptcha());
+         //$this->components['view']->SetVar('CAPTCHA', $this->components['captcha']->FormCaptcha());
+         $this->components['view']->SetVar('CAPTCHA','');
          $this->components['view']->CreateView();
          $this->components['view']->Publish();
         }
@@ -471,8 +479,10 @@ function AdminLogin() // Процедура входа в админку
 {
 $this->AdminAuthorization();
 $ok_key = $this->CheckKey();
-$ok_role = $this->AdminRole($this->GetKeyFromSession());
-if (($ok_key==false) or ($ok_role==false) or ($this->components['captcha']->check()==false) )
+//$ok_role = $this->AdminRole($this->GetKeyFromSession());
+// выключили капчу or ($this->components['captcha']->check()==false)
+// or ($ok_role==false)
+if (($ok_key==false)   )
  {$this->AdminLoginFailMsg();
 
   } else { $this->AdminLoginOkMsg(); };
@@ -489,41 +499,51 @@ if (($ok_key==false) or ($ok_role==false) or ($this->components['captcha']->chec
         public function UserExists($aUser) // Проверка существования пользователя
         {
         $this->components['db']->setTable('users');
-        $z = $this->components['db']->getCell('user', "user='$aUser'");
-		
-		
-		
+        $this->components['db']->Select('user', "user='$aUser'");
+	$data =	$this->components['db']->Read()[0];
+	$z = $data['user'];
         return ($z == $aUser);
         }
 
         function CheckKey() // Сверка ключей
         {
          $ukey = $this->GetKeyFromSession();
+         //echo "Код ". $ukey . "<br/>";
+         //echo "Надо ". $this->SearchKey($ukey) . "<br/>";
      return (($this->SearchKey($ukey)==$ukey) and ($ukey!=''));
         }
 
         public function GetRole($aUser) // Проверка роли
 {
        $this->components['db']->setTable('users');
-        return $this->components['db']->getCell('role', "user='$aUser'");
+       $this->components['db']->Select('role', "user='$aUser'");
+       $data = $this->components['db']->Read()[0];
+       return $data['role']; 
 }
 
 public function SearchKey($aKey) // Поиск ключа в базе
 {
-				$this->components['db']->setTable('users');
-                return $this->components['db']->getCell('ukey', "ukey='$aKey'");
+    $this->components['db']->setTable('users');
+    // TODO Проблема с getCell
+    $this->components['db']->Select('ukey', "ukey='$aKey'");
+    $data = $this->components['db']->Read()[0];
+    //echo $data['ukey'];
+    return $data['ukey'];
 }
 
 public function AdminRole($aKey) // Права администратора?
 {
         $this->components['db']->setTable('users');
-        return ('admin'==$this->components['db']->getCell('role', "ukey='$aKey'"));
+        $this->components['db']->Select('role', "ukey='$aKey'");
+        $data = $this->components['db']->Read()[0];
+        return ('admin'==$data['role']);
 }
 
 public function UserRole($aKey) // Права администратора?
 {
 		$this->components['db']->setTable('users');
-        $Role = $this->components['db']->getCell('role', "ukey='$aKey'");
+                $this->components['db']->Select('role', "ukey='$aKey'");
+        $Role = $this->components['db']->Read()[0]['role'];
         return (('user'==$Role) or ('admin'==$Role) or ('seller'==$Role)) ;
 }
 
@@ -593,7 +613,8 @@ return $s;
 
    public function AdminRegistration() // Регистрация
         {
-		if ($this->components['captcha']->check()==false)
+       //$this->components['captcha']->check()==false
+		if (false)
 		{$this->AdminRegisterFailMsg();}
 		else
 		{
