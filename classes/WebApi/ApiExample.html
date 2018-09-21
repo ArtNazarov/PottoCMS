@@ -1,0 +1,87 @@
+<html>
+<head>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<title>Example</title>
+</html>
+<body>
+<label for='idrow'>ID</label> 
+<input name='idrow' type='text' value='' id='idrow'>
+<label for='txt'>Данные</label> 
+<input name='txt' type='text' value='' id='txt'>
+<button id='post'>Добавить</button>
+<button id='update'>Обновить</button>
+<hr/>
+<button id='refresh'>Обновить список</button>
+<div id='list'>
+</div>
+<script>
+$(document).ready( function(){
+
+  refresh();
+
+  function ItemRow(id, data){
+    return `<p><button class='delete' data-rid='${id}' value='delete'>X</button>${id}.) ${data}</p>`;
+  }
+  
+  function delLink(id){
+  return `http://pottocms.local/classes/WebApi/WebApiTest.php?action=delete&user=test&code=7&id=${id}&crc=fc3bdc3fb9570be4422a1382bcfc1f6e`;
+  
+  }
+  
+  function postLink(data){
+  return `http://pottocms.local/classes/WebApi/WebApiTest.php?action=post&user=test&code=7&crc=fc3bdc3fb9570be4422a1382bcfc1f6e&data=${data}`;
+  
+  }
+  
+  function updateLink(id, data){
+  return `http://pottocms.local/classes/WebApi/WebApiTest.php?action=update&id=${id}&user=test&code=7&crc=fc3bdc3fb9570be4422a1382bcfc1f6e&data=${data}`;
+  
+  }
+  
+  function refresh(){
+  $.get('http://pottocms.local/classes/WebApi/WebApiTest.php?action=get-all&user=test&code=7&id=1&crc=fc3bdc3fb9570be4422a1382bcfc1f6e', function(data){
+    console.log(data);
+    $('#list').html('');
+    data['data'].forEach( (item, i, arr)=> {     
+    //console.log(ItemRow(item.id, item.data));
+    $('#list').append( ItemRow(item.id, item.data) );
+    
+    } );
+    handlers(); 
+  })
+ 
+  }
+  
+  
+  function handlers(){
+  console.log('handlers');
+  $('.delete').on('click', function(){
+   console.log('try to delete ' +  $(this).data('rid'));
+   var url = delLink($(this).data('rid'));
+   console.log(url);
+    $.get(url, function(data){
+      console.log(data);
+      refresh();
+    });
+  });
+  }
+  $('#refresh').click( ()=>{ refresh() }); 
+  $('#post').click( function(){
+    $.get(postLink($('#txt').val()), function(data){
+        refresh();
+    });
+  });
+  
+  $('#update').click( function(){
+    $.get(updateLink(parseInt($('#idrow').val()), $('#txt').val()), function(data){
+        refresh();
+    });
+  });
+  
+});
+</script>
+</body>
+</html>
