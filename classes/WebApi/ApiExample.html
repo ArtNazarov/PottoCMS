@@ -4,16 +4,27 @@
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>Example</title>
+<style>
+#dialogUpdate, #dialogNew { display: none}
+</style>
 </html>
 <body>
+<div id='dialogUpdate' title="Правка данных">
 <label for='idrow'>ID</label> 
-<input name='idrow' type='text' value='' id='idrow'>
-<label for='txt'>Данные</label> 
-<input name='txt' type='text' value='' id='txt'>
-<button id='post'>Добавить</button>
+<input name='upd_idrow' type='text' value='' id='upd_idrow'>
+<label for='upd_txt'>Данные</label> 
+<input name='upd_txt' type='text' value='' id='upd_txt'>
 <button id='update'>Обновить</button>
-<hr/>
+</div>
+<div id='dialogNew' title="Внести данные">
+<label for='new_txt'>Данные</label> 
+<input name='new_txt' type='text' value='' id='new_txt'>
+<button id='post'>Добавить</button>
+</div>
+<button id='dlgNew' >+ Добавить данные</button>
 <button id='refresh'>Обновить список</button>
 <div id='list'>
 </div>
@@ -23,7 +34,9 @@ $(document).ready( function(){
   refresh();
 
   function ItemRow(id, data){
-    return `<p><button class='delete' data-rid='${id}' value='delete'>X</button>${id}.) ${data}</p>`;
+    return `<p><button class='delete' data-rid='${id}' value='delete'>Удалить</button>${id}.)
+  <button class='updrow'  data-rid='${id}' data-use='${data}' >Изменить</button>
+    ${data}</p>`;
   }
   
   function delLink(id){
@@ -58,6 +71,18 @@ $(document).ready( function(){
   
   function handlers(){
   console.log('handlers');
+  
+   $('.updrow').each( (index, element)=>{
+   console.log(element);
+   $(element).click(
+  ()=>{
+      console.log($(element).data('rid'));
+      $('#upd_idrow').val($(element).data('rid'));
+      $('#upd_txt').val($(element).data('use'));
+      $('#dialogUpdate').dialog();}
+  )
+ });
+  
   $('.delete').on('click', function(){
    console.log('try to delete ' +  $(this).data('rid'));
    var url = delLink($(this).data('rid'));
@@ -70,16 +95,23 @@ $(document).ready( function(){
   }
   $('#refresh').click( ()=>{ refresh() }); 
   $('#post').click( function(){
-    $.get(postLink($('#txt').val()), function(data){
+    $.get(postLink($('#new_txt').val()), function(data){
         refresh();
     });
   });
   
   $('#update').click( function(){
-    $.get(updateLink(parseInt($('#idrow').val()), $('#txt').val()), function(data){
+    $.get(updateLink(parseInt($('#upd_idrow').val()), $('#upd_txt').val()), function(data){
         refresh();
     });
   });
+  
+  $('#dlgNew').click(
+      ()=>{$('#dialogNew').dialog();}
+  );
+  
+ 
+  
   
 });
 </script>
