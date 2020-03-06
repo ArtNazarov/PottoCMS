@@ -79,18 +79,24 @@ class SiteCategoryItem
          * @param object $db_component - ссылка на SealDb
          * @return array[string] of string
          */
-	function getCategoriesArray(&$db_component, $root_key)
+	function getCategoriesArray(&$db_component, $root_key = 'root')
 	{
 		$arr = array();
 		$arr[''] = $root_key;
 		$db_component->setTable('categories');
 		$db_component->Select('cat_name, category', '1=1');
-		while ($data = $db_component->Read())
-		{
-			$key = $data['category'];
-			$value = $data['cat_name'];
+                $rows = $db_component->Read();
+               
+                foreach ($rows as $row){
+                          
+                        
+			$key = $row['category'];
+			$value = $row['cat_name'];
 			$arr[$key] = $value;
-		}		
+                        
+                        }
+        
+                
 		return $arr;
 	}
 
