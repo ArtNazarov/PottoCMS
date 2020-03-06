@@ -15,7 +15,7 @@ class DatabaseLayer
 	var $db = null; // База данных
         var $db_port = 3306;
 	var $db_table = ''; // Имя текущей таблицы
-        var $sql_result = null; // Результат запроса
+        var $sql_result = false; // Результат запроса
 	var $proc = null; // Запросы хранимые
 	var $params = null; // Параметры запросов
 	var $query = '';  // Последний запрос к базе
@@ -191,10 +191,14 @@ if (false == $this->db)
  */
 	function Clear()
 	{                 
-           // var_dump($this->query);
-           // var_dump($this->sql_result);
-		mysqli_free_result($this->sql_result);// or die("ERROR DatabaseLayer.class.php at Clear: ".mysqli_error($this->db_link));
-		$this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
+            try {
+		mysqli_free_result($this->sql_result);
+            } catch (Exception $e) {
+             // if result already cleared
+             $mess = "ERROR DatabaseLayer.class.php at Clear: ".mysqli_error($this->db_link);
+             $this->log->WriteLog('sql', $mess);
+            }
+            $this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
 	}
 /*
  * Число строк в выборке
