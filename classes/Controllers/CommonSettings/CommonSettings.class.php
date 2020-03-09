@@ -158,6 +158,35 @@ $this->m->Update("optvalue='$option_value'", "optname='$option_name'");};
             };
             return $arr;            
         }
+        
+        
+    function getAction()
+{
+	return $this->GetPost('mod_action', '');
+}
+
+
+function action($aTask)
+{
+	switch ($aTask)
+	{
+		case 'fillopt' : {$this->FillOpt(); break;};
+		case 'addopt' : {$this->Addopt(); break;};
+		case 'filledit' : {$this->FillEdit(); break;};
+		case 'editopt' : {$this->Editopt(); break;};
+		case 'deleteopt' : {$this->Deleteopt(); break;};
+		default : {
+						$this->ViewOpts(); break;
+			   	}
+
+	}
+}
+
+function Run()
+{
+	$this->action($this->getAction());
+	return $this->ui;
+}
                 
 }
 

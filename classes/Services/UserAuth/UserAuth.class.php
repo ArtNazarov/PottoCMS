@@ -698,7 +698,7 @@ $this->logOut();
 
 $this->UserLogOutMsg();
         }
-        function AdminActions()
+        function  AdminActions()
         {
                 $aTask = $this->GetAction();
                         switch ($aTask)
