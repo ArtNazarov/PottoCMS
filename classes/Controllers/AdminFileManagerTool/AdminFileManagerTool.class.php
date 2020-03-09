@@ -75,7 +75,7 @@ class AdminFileManagerTool extends FileUtils
 	{
             
             $fu = $this->DirScan($aDir);                       
-            $this->v->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'file.items.tpl');
+            $this->v->UseTpl( $this->mod_path.'file.items.tpl');
             $items = '';
             foreach ($fu as $item)
             {
@@ -84,7 +84,7 @@ class AdminFileManagerTool extends FileUtils
                 $items .= $this->v->GetView();
             };
            	
-		$this->v->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'filemanagerui.tpl');
+		$this->v->UseTpl($this->mod_path.'filemanagerui.tpl');
 		$this->v->SetVars(array('LIST' => $items,
 		'ACTION'=> $this->getAction(),
 		'DIROBJECT'=> $aDir,
