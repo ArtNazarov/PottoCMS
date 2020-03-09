@@ -700,7 +700,9 @@ $this->UserLogOutMsg();
         }
         function  AdminActions()
         {
+              
                 $aTask = $this->GetAction();
+               
                         switch ($aTask)
                         {
                                 case 'clearlog' :
@@ -754,14 +756,17 @@ $this->UserLogOutMsg();
                                 };
                                 default :
                                 {
+                                 
                                 // Просмотр списка материалов
                                 $this->visualized = '';
                                 $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/admin/items/userslist.tpl');
                                 $this->components['db']->Plug();
                                 $this->components['db']->setTable('users');
                                 $this->components['db']->Select('user, ukey, role', '1=1');
-                                $this->vizualized .= $this->components['db']->sql_result;
+                                
+                                
                                 $rows = $this->components['db']->Read();
+                               
                                 foreach ($rows as $i => $data )
                                 {
                                         $this->components['view']->SetVar('USERNAME', $data['user']);
@@ -775,6 +780,7 @@ $this->UserLogOutMsg();
                                 $this->components['view']->SetVar('ITEMS', $this->visualized);
                                 $this->components['view']->CreateView();
                                 $this->visualized = $this->components['view']->GetView();
+                                
                                 break;
                                 };
 
@@ -782,7 +788,8 @@ $this->UserLogOutMsg();
         }
 
         function AdminRun()
-        {
+        {   
+               
                 $this->AdminActions();
                 return $this->visualized;
         }

@@ -115,6 +115,7 @@ function __destruct()
 	 $this->components['view']->SetGlobal('admin_menu', $_SERVER['DOCUMENT_ROOT'].'/templates/admin/global/adminmenu.tpl');
 	 $this->components['view']->SetVar('TITLE', 'Potto CMS');
      $this->components['view']->SetVar('HEAD', '');
+     
  	 $this->components['view']->SetVar('BODY',  $this->components['security']->AdminRun());
 	 $this->components['view']->CreateView();
 	 $this->components['view']->Publish();
