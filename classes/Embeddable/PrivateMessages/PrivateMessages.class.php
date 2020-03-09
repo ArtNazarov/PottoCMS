@@ -31,7 +31,7 @@ class PrivateMessages
 	$aKey = $_SESSION['ukey'];
 	$this->components['db']->Select("user", "ukey='$aKey'");
 	$data = $this->components['db']->Read()[0];
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'pm_form.tpl');
+	$this->components['view']->UseTpl($this->mod_path.'pm_form.tpl');
 	$this->components['view']->SetVar('USERNAME', $data['user']);
 	$this->components['view']->CreateView();
 	return $this->components['view']->GetView();
@@ -77,7 +77,7 @@ class PrivateMessages
     $this->components['db']->setTable('pm');
     $this->components['db']->Select('id_pm, usr1, usr2, message', "usr2='$aUser'");
 
-  	    $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'pm_inbox.tpl');
+  	    $this->components['view']->UseTpl($this->mod_path.'pm_inbox.tpl');
 	 $rows = $this->components['db']->Read();
          foreach ($rows as $index => $data )
         {
@@ -106,7 +106,7 @@ class PrivateMessages
 
 		$h = '';
 		$this->components['db']->setTable('pm');
-		$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'pm_outbox.tpl');
+		$this->components['view']->UseTpl($this->mod_path.'pm_outbox.tpl');
 	     $this->components['db']->Select('id_pm, usr1, usr2, message', "usr1='$aUser'");
 
                 $rows = $this->components['db']->Read();
@@ -144,7 +144,7 @@ class PrivateMessages
 	$this->components['db']->setTable('pm');
 		$h = '';
 		$this->components['db']->Select('id_pm, usr1, usr2, message', "id_pm=$aID");
-  	    $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'pm_open.tpl');
+  	    $this->components['view']->UseTpl($this->mod_path.'pm_open.tpl');
 		 $rows = $this->components['db']->Read();
   	        foreach ($rows as $index => $data )
         {
