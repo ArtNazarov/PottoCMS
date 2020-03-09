@@ -27,11 +27,11 @@ class SiteMapTool
  {
 	 $sitemap = "";
      $urls = "";
-     $this->v->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'urlitem.tpl');
+     $this->v->UseTpl($this->mod_path.'urlitem.tpl');
 	 // Для категорий
 	 $this->m->setTable('categories');
 	 $this->m->Select('category', '1=1');
-	 $rows = $this->components['db']->Read();
+	 $rows = $this->m->Read();
          foreach ($rows as $index => $data )
 	 {
  	   $url = $data['category'];
@@ -44,7 +44,7 @@ class SiteMapTool
 	 // Для страниц сайта
 	 $this->m->setTable('pages');
  	 $this->m->Select('id', '1=1');
-         $rows = $this->components['db']->Read();
+         $rows = $this->m->Read();
          foreach ($rows as $index => $data )
 	 {
  	   $url = $data['id'];
@@ -55,7 +55,7 @@ class SiteMapTool
 	 }
 	 $this->m->Done();
      // Пишем карту сайта
-    $this->v->UseTpl($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'sitemap.tpl');
+    $this->v->UseTpl($this->mod_path.'sitemap.tpl');
 	$this->v->SetVar('URLS', $urls);
 	$this->v->CreateView();
 	$sitemap = $this->v->GetView();
