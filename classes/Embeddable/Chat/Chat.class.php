@@ -1,5 +1,5 @@
 <?php
-if (!defined('APP')) {die('ERROR okapichat.class.php');};
+if (!defined('APP')) {die('ERROR chat.class.php');};
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
 
 class Chat
@@ -32,7 +32,7 @@ var $mod_path = __DIR__ . '/';
 
   function getchatpage()
   {
-  return $this->components['view']->PasteFile($_SERVER['DOCUMENT_ROOT'].$this->mod_path.'chat.tpl');
+  return $this->components['view']->PasteFile($this->mod_path.'chat.tpl');
   }
   function getview()
   {
