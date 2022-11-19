@@ -531,7 +531,7 @@ if ( $cc <=0 )
 else
  { 
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/shop/shop.minicart.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.items.tpl');
    $names = $this->GetNamesOfCategories();
    for ($i=1; $i<=$cc; $i++)
      {
@@ -565,7 +565,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/shop/shop.minicart.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.minicart.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);	
