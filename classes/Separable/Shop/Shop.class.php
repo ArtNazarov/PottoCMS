@@ -74,7 +74,7 @@ $tg = explode(",", $tags);
  */
 function alsoview($tags)
 {
-$p = null;
+$p = [];
 if (trim($tags)!=="")
 {
 $tg = explode(",", $tags);
@@ -127,7 +127,7 @@ var $meta;
  * Подключает подчиненные компоненты и устанавливает параметры по умолчанию
  * @param mixed $params - параметры конструктора
  */
-function __construct(&$params)
+function __construct(array &$params)
 {
 	$this->components = null;
     $this->components['factory'] = new ClassFactory($params);

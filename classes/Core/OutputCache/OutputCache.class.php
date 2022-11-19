@@ -7,7 +7,7 @@ class OutputCache
     var $key;
     var $log;
     var $has_cache = false; 
-    function __construct($params)
+    function __construct(array $params)
         {
                  
             $this->cache = new CacheLayer($params);

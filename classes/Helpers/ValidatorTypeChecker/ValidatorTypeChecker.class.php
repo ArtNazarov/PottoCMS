@@ -10,18 +10,18 @@ function special_handler($exception)
       $file = fopen($_SERVER['DOCUMENT_ROOT']. "/logs/exceptions.log", "a+");      
       fwrite($file,  $msg. "\n");
       fclose($file);    
-      die( "<HTML><HEAD><meta charset='utf-8'/><TITLE>Error!</TITLE></HEAD><BODY TEXT='#FFFF66' BGCOLOR='#0000FF'>
-          <span style='color:#0000ff;background-color:#ffff66'>POTTO CMS KERNEL: СБОЙ</span></br>
-          Возникла ошибка. Подробности: $msg 
-          <br/>Приносим свои извинения. Отчет об ошибке отправлен администратору.
-          </body></html>");
-}
+      //echo $msg . "\n\r";
+     // debug_print_backtrace();
+die();
+
+
+    }
 class ValidatorTypeChecker
 {
 // OR USE STANDART PHP FUNCTIONS FILTER_*
 var $error;
 
-function _construct($params)
+function _construct(array $params)
 {
 	$this->error = array();   
 }

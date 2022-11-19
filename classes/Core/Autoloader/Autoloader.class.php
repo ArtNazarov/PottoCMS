@@ -2,7 +2,7 @@
 
   
 
-function getDirContents($dir, &$results = array()){
+function getDirContents(string $dir, array &$results = array()){
     $files = scandir($dir);
 
     foreach($files as $key => $value){
@@ -18,7 +18,7 @@ function getDirContents($dir, &$results = array()){
     return $results;
 }
     
-    function filter_files($dir){
+    function filter_files(string $dir){
         $result = [];
         
         for($i=0;$i<count($dir);$i++){

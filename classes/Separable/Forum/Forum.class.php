@@ -11,7 +11,7 @@ class Forum
 var $components; // Компоненты
 var $title; // Заголовок
 var $conf_name; // Название конференции
-	function __construct($params)
+	function __construct(array $params)
 	{
 		$this->components = null;
 		$this->components['factory'] = new ClassFactory($params);

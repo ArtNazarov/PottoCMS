@@ -2,11 +2,11 @@
 if (!defined('APP')) {die('ERROR ClassFactory.class.php');};
 // Фабрика классов
 class ClassFactory {
-function __construct($params)
+function __construct(array $params)
 {
 }
 
-function createInstance($aClass, &$params, $aCategory='base')
+function createInstance(string $aClass, array &$params, $aCategory='base')
 {
 	$some_obj = null;
 	$some_obj = ucfirst(strtolower($aClass));
@@ -30,6 +30,7 @@ function createInstance($aClass, &$params, $aCategory='base')
 			echo "Не удалось найти файл класса $aClass<br/>";
                         echo " по пути $class_path<br/>";
                         echo 'error in function ClassFactory->createInstance<br/>';
+                        debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 			exit;
 			die();
 			};
@@ -38,7 +39,7 @@ function createInstance($aClass, &$params, $aCategory='base')
 	return $some_obj;
 }
 // Добавляет в набор компонентов объекты - конвеер
-function createInstances(&$components, $gears, &$params)
+function createInstances(array &$components, array$gears, array &$params)
 {
 	foreach ($gears as $componentname => $classparams)
 		{

@@ -5,7 +5,7 @@ if (!defined('APP')) {die('ERROR paginator.class.php');};
 class Paginator
 {
 
-function __construct($params)
+function __construct(array $params)
 {
 }
 

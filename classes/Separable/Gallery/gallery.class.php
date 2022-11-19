@@ -10,7 +10,7 @@ class Gallery
     var $components;
     var $role;
     
-    function __construct($params)
+    function __construct(array $params)
     {
         $this->components['factory'] = new ClassFactory($params);
         $this->components['view'] =  $this->components['factory']->createInstance("TemplateTool", $params, 'Core');	

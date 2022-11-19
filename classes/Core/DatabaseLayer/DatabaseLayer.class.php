@@ -43,7 +43,7 @@ class DatabaseLayer
         }
         
         
-	function __construct($params)
+	function __construct(array $params)
 	{
             //echo "Вход в DatabaseLayer->__construct()<br/>";
             try {
@@ -192,11 +192,13 @@ if (false == $this->db)
 	function Clear()
 	{                 
             try {
-		mysqli_free_result($this->sql_result);
+		 @mysqli_free_result($this->sql_result);
             } catch (Exception $e) {
              // if result already cleared
+             //debug_print_backtrace();
              $mess = "ERROR DatabaseLayer.class.php at Clear: ".mysqli_error($this->db_link);
              $this->log->WriteLog('sql', $mess);
+             //die();
             }
             $this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
 	}

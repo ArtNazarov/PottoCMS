@@ -7,7 +7,7 @@ class Emailing
 {
 	var $components;
 var $mod_path = __DIR__ . '/';
-function __construct($params)
+function __construct(array $params)
 {
   $this->components = null;
   $this->components['factory'] = new ClassFactory($params);

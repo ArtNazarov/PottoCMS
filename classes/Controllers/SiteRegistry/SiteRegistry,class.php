@@ -14,7 +14,7 @@ var $ui;  // Интерфейс
          return $result;
      }
 
-function __construct($params)
+function __construct(array $params)
 {
     //echo "Создан SiteRegistry!<br/>";
 		$this->components = null;

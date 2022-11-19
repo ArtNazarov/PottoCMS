@@ -16,7 +16,7 @@ var $ui;  // Интерфейс
      }
        
 
-function __construct($params)
+function __construct(array  $params)
 {
        //echo "Вход в Permissions->_construct";
 	$this->components = null;

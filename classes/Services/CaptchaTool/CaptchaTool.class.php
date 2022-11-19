@@ -22,7 +22,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Helpers/Encryption/Encryption.c
 class CaptchaTool
 {
    var $components;
-   function __construct($params)
+   function __construct(array $params)
    {
 	 $this->components['factory'] = new ClassFactory($params);
      // Настройки шаблонизатора

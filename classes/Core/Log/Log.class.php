@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/FileUtils/FileUtils.class.
 class Log extends FileUtils
 {            
     var $ignore = array();
-    function __construct($params)
+    function __construct(array $params)
 {
         // echo "Вход в Log->__construct()<br/>"; 
          parent::__construct($params);

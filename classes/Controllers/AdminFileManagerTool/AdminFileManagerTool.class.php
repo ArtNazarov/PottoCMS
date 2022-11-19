@@ -24,7 +24,7 @@ class AdminFileManagerTool extends FileUtils
      }
 
         
-	function __construct($params)
+	function __construct(array $params)
 	{
                 parent::__construct($params);
 		$this->v = new TemplateTool($params);

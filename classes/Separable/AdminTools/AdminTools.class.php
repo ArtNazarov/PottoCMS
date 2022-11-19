@@ -7,7 +7,7 @@ class AdminTools
 {
 var $components; // Фабрика классов
 
-	function __construct($params)
+	function __construct(array $params)
 	{
            // echo "Класс админки конструируется<br>";
 		$this->components = null;
@@ -19,7 +19,7 @@ var $components; // Фабрика классов
 	 $this->components['files'] = $this->components['factory']->createInstance("AdminFileManagerTool", $params, 'Controllers');
 	 $this->components['usergroups'] = $this->components['factory']->createInstance("UserGroups", $params, 'Controllers');
 	 $this->components['permissions'] = $this->components['factory']->createInstance("Permissions", $params, 'Controllers');
-	 $this->components['sitemap'] = $this->components['factory']->createInstance("SiteMapTool", $params, 'Separable');         
+	// $this->components['sitemap'] = $this->components['factory']->createInstance("SiteMapTool", $params, 'Separable');         
          $this->components['reestr'] = $this->components['factory']->createInstance("CommonSettings", $params, 'Controllers');
          $pr_links = "<a href='/classes/fileutils/antivir.php'>Антивирусный сканер</a> <a href='/classes/fileutils/report.php'>Отчет антивируса</a>";              
 	 if (PROTECTION===false)

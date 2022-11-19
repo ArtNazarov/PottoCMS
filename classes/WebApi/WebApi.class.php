@@ -34,7 +34,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
   class WebApi {
       public $api_data = 'api_data';
       public $api_users = 'api_users';
-      function __construct($params){
+      function __construct(array $params){
         $this->components = null;
         $this->components['factory'] = new ClassFactory($params);
         $this->components['db'] =  $this->components['factory']->createInstance("DatabaseLayer", $params, 'Core');

@@ -108,7 +108,7 @@ var $dtype_const = array(''=>'Без статуса', 'plus'=>'Завоз', 'min
      * Конструктор
      * @param $params - список параметров конструктора
      */
-function __construct(&$params)
+function __construct(array &$params)
 {
 	$this->components = null;
     $this->components['factory'] = new ClassFactory($params);

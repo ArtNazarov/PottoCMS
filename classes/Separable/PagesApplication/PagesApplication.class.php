@@ -1,30 +1,38 @@
 <?php // Классы
 //if (!defined('APP')) {die('ERROR pages.class.php');};
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] .'/collections/typecheckers.collection.php';
 
 class PagesApplication
 {
-	var $components; // Компоненты
-	var $cache_filename;
+	var array $components; // Компоненты
+	var string $cache_filename;
 	var $cache_exists;
 	var $cache_actually;
 	var $kernel; // Ядро
         var $system; // Системные данные
 	
-	function __construct(&$params)
+	function __construct(array &$params)
 	{	
-	$this->components = null;
+	$this->components = [];
   	$this->components['factory'] = new ClassFactory($params); // Фабрика классов
 	 // Настройки базы данных
-     if (($params['db']!=null) && (is_object($params['db'])))
+     if (check_class($params, 'db', 'DataBaseLayer'))
      { // Не создаем новый объект базы данных, используем переданный
      $this->components['db'] = &$params['db'];
+                    
+                    
      }
      else
-     { // Конструируем новый объект базы данных
- 	 $this->components['db'] = $this->components['factory']->createInstance("DatabaseLayer", $params, 'Core');
- 	 };
+     { 
+                   
+// Конструируем новый объект базы данных
+ 	 $this->components['db'] = $this->components['factory']->createInstance("DataBaseLayer", $params, 'Core');
+ 	 // распространение параметра
+         $params['db'] = $this->components['db'];
+         
+     };
+// подключились к базе
  	 $this->components['db']->Plug();
      $gears = @array(
 	       
@@ -123,6 +131,7 @@ class PagesApplication
          $this->system['username'] = $this->components['usr']->GetUsernameFromSession();
          $this->system['usergroup'] = $this->components['usr']->GetRole($this->system['username']);
          
+                    
          
 	 }
          

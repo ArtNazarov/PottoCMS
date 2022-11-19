@@ -5,7 +5,7 @@ class EventHandlers
 	var $hobj = null; // Ссылки на обработчик
 	var $honevent = null; // Методы
 	var $hcount = 0;
-	function __construct($params)
+	function __construct(array $params)
 	{
 	}
 	function add(&$ObsObject, $OnEvent)

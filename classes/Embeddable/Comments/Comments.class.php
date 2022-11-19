@@ -18,7 +18,7 @@ class Comments
 {
 var $components;
 // id_page == $_SERVER['REQUEST_URI']
-function __construct(&$params)
+function __construct(array &$params)
 {
 	$this->components = null;
     $this->components['factory'] = new ClassFactory($params);

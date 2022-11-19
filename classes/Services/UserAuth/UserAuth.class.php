@@ -3,23 +3,36 @@ if (!defined('APP')) {die('ERROR meerkat.class.php');};
  include_once $_SERVER['DOCUMENT_ROOT'].'/config/sysconst.php';
  require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.class.php';
  require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/CacheLayer/CacheLayer.class.php';
+ // проверка типов
+ require_once $_SERVER['DOCUMENT_ROOT'].'/collections/typecheckers.collection.php';                               
 // Авторизация пользователя
+ 
+ 
+ 
+ 
 class UserAuth
 {
         var $visualized; // Для внешних шаблонов
         var $components;
 
-        public function __construct(&$params)
+        public function __construct(array &$params)
         {
         $this->components = null;
         $this->components['factory'] = new ClassFactory($params); // Фабрика классов
- // Настройки базы данныx   x   х
-if (($params['db']!=null) && (is_object($params['db'])))
+ // Настройки базы данныx  
+if (is_null($params)) {echo "Параметры UserAuth не заданы";exit();}; 
+//echo var_dump($params); 
+if (check_class($params, 'db', 'DataBaseLayer')) // проинициализирован
      { // Не создаем новый объект базы данных, используем переданный
      $this->components['db'] = &$params['db'];
+     
+                                
      }
      else
      { // Конструируем новый объект базы данных
+         
+                                
+     
  	 $this->components['db'] = $this->components['factory']->createInstance("DatabaseLayer", $params, 'Core');
  	 };
          $this->components['db']->Plug();

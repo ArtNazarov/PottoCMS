@@ -9,7 +9,7 @@ class TemplateTool
 	var $tpl_global; // Глобальные блоки
         var $tpl_styles; // Список стилей
 	var $tpl_view; // Вид страницы
-	function __construct($params)
+	function __construct(array $params)
 	{
 // echo "Создаю объект шаблонизатор<br/>";
  $tpl_file = null; // Указатель на файл шаблона

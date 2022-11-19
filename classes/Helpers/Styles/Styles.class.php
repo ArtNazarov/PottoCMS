@@ -7,7 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
 class Styles
 {
 var $components;
-function __construct(&$params)
+function __construct(array &$params)
 {
 	$this->components = null;
     $this->components['factory'] = new ClassFactory($params);

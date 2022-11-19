@@ -8,7 +8,7 @@ var $table_rows = 0;
 var $table_cols = 0;
 var $hbody = '';
 var $hhead = '';
-function __construct($params)
+function __construct(array $params)
 {
 }
 // Список select

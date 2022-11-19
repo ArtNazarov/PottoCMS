@@ -20,7 +20,7 @@ class RssTool
 {
    var $components;
    var $mod_path = __DIR__ . '/';
-   function __construct($params)
+   function __construct(array $params)
    {
 	 $this->components['factory'] = new ClassFactory($params);
      // Настройки шаблонизатора

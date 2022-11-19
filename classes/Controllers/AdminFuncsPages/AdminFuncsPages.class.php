@@ -8,7 +8,7 @@ class AdminFuncsPages
 	var $ui; // Возвращает пользовательский интерфейс
 
 	// НАЧАЛЬНЫЕ УСТАНОВКИ
-	function __construct(&$params)
+	function __construct(array &$params)
 	{
 		$this->components = null;
 		$this->components['factory'] = new ClassFactory($params); // Фабрика классов

@@ -2,7 +2,7 @@
 
 class FileUtils
 {
-      function __construct($params)
+      function __construct(array $params)
       {
                    //echo "Вход в FileUtils->__construct()<br/>";  
                    //echo "Выход из FileUtils->__construct()<br/>"; 
@@ -35,7 +35,14 @@ class FileUtils
         $mode = $params['mode'];
         $message = $params['message'];
         $this->StopOnDots($aFileName);
-        $fh = @fopen($_SERVER['DOCUMENT_ROOT'].$aFileName, $mode['rw']);
+        
+        $qfilename = $_SERVER['DOCUMENT_ROOT'].$aFileName;
+        
+        $notExisted = !file_exists( $qfilename );
+        
+     
+                
+        $fh = @fopen($qfilename, $mode['rw']);
 	flock($fh, LOCK_EX);
         
 	if ($mode['with_date'])
@@ -47,7 +54,8 @@ class FileUtils
         fwrite($fh, $message);
         };
         flock($fh, LOCK_UN);
-	fclose($fh);    
+	fclose($fh);
+        
         }
       // Затирает файл, но не удаляет его  
         function ClearFile($aFileName)

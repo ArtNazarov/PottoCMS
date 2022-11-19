@@ -8,7 +8,7 @@ class SiteMapTool
  var $m;
  var $o;
  var $mod_path = __DIR__ . '/';
- function __construct($params)
+ function __construct(array $params)
  {
 	  // Настройки шаблонизатора
 	 $this->v = new TemplateTool($params);
@@ -40,7 +40,7 @@ class SiteMapTool
 	   $this->v->CreateView();
 	   $urls .= $this->v->GetView();
 	 }
-	 $this->m->Clear();
+	 //$this->m->Clear();
 	 // Для страниц сайта
 	 $this->m->setTable('pages');
  	 $this->m->Select('id', '1=1');
@@ -53,7 +53,7 @@ class SiteMapTool
 	   $this->v->CreateView();
 	   $urls .= $this->v->GetView();
 	 }
-	 $this->m->Done();
+   $this->m->Done();
      // Пишем карту сайта
     $this->v->UseTpl($this->mod_path.'sitemap.tpl');
 	$this->v->SetVar('URLS', $urls);

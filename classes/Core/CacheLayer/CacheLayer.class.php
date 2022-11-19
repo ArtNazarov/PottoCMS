@@ -34,7 +34,7 @@ var $value;
  * если каталог кэша переменных не существует, он будет создан
  * @param type $params - параметры конструктора 
  */
-function __construct($params)
+function __construct(array $params)
 {
 parent::__construct($params);
 $this->ext = '.var';

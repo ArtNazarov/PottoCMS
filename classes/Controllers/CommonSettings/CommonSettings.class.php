@@ -35,7 +35,7 @@ var $cache;
   * Конструктор.
   * Подключается к базе данных, создает объект кэша, обновляет опции
   */
-    function __construct($params)
+    function __construct(array $params)
 	{
      $this->m = new DatabaseLayer($params);
 	 $this->cache = new CacheLayer($params);

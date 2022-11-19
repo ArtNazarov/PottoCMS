@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/classes/Core/Autoloader/Autoloader.cl
 class Application
 {
  var $components;
-   function __construct($params)
+   function __construct(array $params)
    {
      $this->components['factory'] = new ClassFactory($params);
      $this->components['usr'] =  $this->components['factory']->createInstance("UserAuth", $params, 'Services');	
@@ -40,7 +40,7 @@ if ($doc_exists and $not_expired and $not_admin_class and !$admin_session)
 }
 else
 {
-$params = null;
+$params = []; // must be array
 $time_start = microtime(true); // НАЧАЛО СЦЕНАРИЯ
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/Protector/Protector.library.php'; // ФИЛЬТРЫ ПЕРЕМЕННЫХ
 require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Services/UserAuth/UserAuth.class.php'; // ФИЛЬТРЫ ПЕРЕМЕННЫХ

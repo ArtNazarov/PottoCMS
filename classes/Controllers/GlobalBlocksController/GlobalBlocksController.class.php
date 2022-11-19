@@ -7,7 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Core/ClassFactory/ClassFactory.
 class GlobalBlocksController
 {
 var $components;
-function __construct(&$params)
+function __construct(array &$params)
 {
    // echo "Вход в конструктор глобальных блоков<br/>";
 	$this->components = null;
