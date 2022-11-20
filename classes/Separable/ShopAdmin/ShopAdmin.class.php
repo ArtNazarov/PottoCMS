@@ -385,20 +385,21 @@ else
 
 function provodka() 
 {
-$datestr = date('w_d_Y_m');
+$datestr = date('Y-m-d h:i:s');
+$op_d = date('Y-m-d-h_i_s');
 if ($_SESSION['bill']['count']>0)
  { 
    $items = "";
    
    
    
-   $operation = 'op'.rand(1,99).'d'.$datestr;
+   $operation = 'op'.rand(1,99).'d'. $op_d;
   
    for ($i=1; $i<=$_SESSION['bill']['count']; $i++)
      {
 		 $artikul = $_SESSION['bill']["item".$i]['artikul'];	 
- 		 $count = $_SESSION['bill']["item".$i]['count'];	 
-		 // Узнаем информацию о товаре из базы	 
+ 		 $count = $_SESSION['bill']["item".$i]['count'];
+                 // Узнаем информацию о товаре из базы	 
 		 $artikul = $_SESSION['bill']["item".$i]['artikul'];
 		 
 		 $this->components['db']->setTable('trade_sklad');
@@ -406,13 +407,22 @@ if ($_SESSION['bill']['count']>0)
 	     $this->components['db']->Select('artikul, description, type, price', "artikul='$artikul'");
 
 	$data = $this->components['db']->Read();
+        
+                 
+        
+        $item = $data[0];
 	
-	  $price =  $data['price'];
+	  $price =  $item['price'];
+          
+         
 		
 	$this->components['db']->setTable('trade_operations_details');
 	
-	$this->components['db']->Insert("operation, artikul, price, count", 
-        "'$operation', '$artikul', $price, $count");
+        $corr_id = $operation .  "-$i";         
+	
+        $this->components['db']->Insert(
+                "corr_id, operation, artikul, price, count", 
+                "'$corr_id', '$operation', '$artikul', $price, $count");
 		 		 		 
 		  		 
 	
@@ -423,7 +433,8 @@ if ($_SESSION['bill']['count']>0)
   $date = $datestr;
   $username = $this->components['usr']->GetUsernameFromSession();
   $status = 'ОЖИДАНИЕ';
-  $this->components['db']->Insert("operation, date, agent, dtype, username",  "'$operation', '$date', '$agent', '$dtype', '$username'");   
+  $this->components['db']->Insert("operation, date, agent, dtype, username, status",  
+                                "'$operation', '$date', '$agent', '$dtype', '$username', 'new'");   
 	 };
 	 // Сбрасываем накладную
 	$_SESSION['bill']['count'] = 0;
@@ -619,7 +630,7 @@ function ViewOrders()
 	$page = $_GET['page'];
 	if ($page<=0) {$page=1;};
 	$from_page = $articles * ($page - 1);
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.order.short.items.tpl');
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.order.short.items.tpl');
     $this->components['db']->setTable('trade_operations');
 	 
 	$this->components['db']->Select('operation, dtype, agent, username, status, date ', "$where ORDER BY operation LIMIT $from_page, $articles");
@@ -639,7 +650,7 @@ function ViewOrders()
 		$items .= $this->components['view']->GetView();
 	}
 
-      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.order.table.tpl');
+      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.order.table.tpl');
 	
   $this->components['paginator']->Pages($this, $page, 'dtype', $category, $articles, $link, "trade_operations", "1=1");
 	 
@@ -691,7 +702,7 @@ function View()
 	isset($_GET['page']) ? 	$page = $_GET['page'] : $page = 1;
 	if ($page<=0) {$page=1;};
 	$from_page = $articles * ($page - 1);
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.items.tpl');
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.items.tpl');
     
     $this->components['db']->setTable('trade_structure');
     // Получаем имена категорий
@@ -728,7 +739,7 @@ function View()
 		$items .= $this->components['view']->GetView();
 	}
 
-      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.table.tpl');
+      $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.table.tpl');
 	
   $this->components['paginator']->SPages($this, $page, $where, $category, $articles, $link, "trade_sklad", "1=1");
 	 
@@ -762,7 +773,7 @@ function View()
 
  function FNew()  
  {
-		$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.editor.tpl');
+		$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.editor.tpl');
 	  	$this->components['view']->SetVar('ARTIKUL', '');
                 $this->components['view']->SetVar('CAPTIONTXT', '');
      	$this->components['view']->SetVar('DESCRIPTION', '');
@@ -792,7 +803,7 @@ function View()
  
   function FNewType() 
  {
-		$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.type.editor.tpl');
+		$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.type.editor.tpl');
 	  	$this->components['view']->SetVar('CATEGORY', '');
      	$this->components['view']->SetVar('OLD_CATEGORY', '');
      	$this->components['view']->SetVar('CATNAME', '');
@@ -816,7 +827,7 @@ function View()
  
   function FEdit()  
  {
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.editor.tpl'); 
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.editor.tpl'); 
 	$this->components['db']->setTable('trade_sklad');
 	$artikul = $_GET['artikul'];
 	$this->components['db']->Select('*', "artikul='$artikul'");
@@ -855,7 +866,7 @@ function View()
  
    function FEditType()  
  {
-	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.type.editor.tpl'); 
+	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.type.editor.tpl'); 
 	$this->components['db']->setTable('trade_structure');
 	$category = $_GET['category'];
 	$this->components['db']->Select('category, catname, parent', "category='$category'");
@@ -959,7 +970,7 @@ function View()
   
  function FAddToBill() 
  {
- $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.count.tpl');
+ $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.count.tpl');
 		$this->components['view']->SetVar('ACTION_NAME', 'Внести товар в накладную');
 	  	$this->components['view']->SetVar('ARTIKUL', $_GET['artikul']);
 		
@@ -988,7 +999,7 @@ function View()
  
 function faddcall()
 {
-    $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.faddcall.tpl');
+    $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.faddcall.tpl');
 	$this->components['view']->CreateView();
 return $this->components['view']->GetView();
 }
@@ -1002,7 +1013,7 @@ return $this->components['view']->GetView();
 
 function addcall() 
 {
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.callmsg.tpl');
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.callmsg.tpl');
 $this->components['db']->setTable('trade_sklad_calls');
 $this->components['db']->Select('count(*) as idmax', '1=1');
 $data = $this->components['db']->Read()[0];
@@ -1028,7 +1039,7 @@ return $this->components['view']->GetView();
 
 function deletecall() 
 {
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.callmsg.tpl');
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.callmsg.tpl');
 $callid = $_GET['callid'];
 $this->components['db']->setTable('trade_sklad_calls');
 $this->components['db']->Delete("callid=$callid");
@@ -1038,7 +1049,7 @@ return $this->components['view']->GetView();
 }
 function viewcalls()
 {
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.callitems.tpl');    
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.callitems.tpl');    
 $this->components['db']->setTable('trade_sklad_calls');
 $this->components['db']->Select('*', '1=1 ORDER BY callid DESC');
 $items = '';
@@ -1055,7 +1066,7 @@ foreach ($rows as $i => $data)
     $items.=$this->components['view']->GetView();    
 }
 
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.calltable.tpl');    
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.calltable.tpl');    
 $this->components['view']->SetVar('ITEMS', $items);
 $this->components['view']->CreateView();
 return $this->components['view']->GetView();
@@ -1086,7 +1097,7 @@ if ($bill_count<=0)
 else
  {    
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.bill.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.bill.items.tpl');
    for ($i=1; $i<=$bill_count; $i++)
      {
 		 $this->components['view']->SetVar('NOMER', $i);	
@@ -1111,7 +1122,7 @@ else
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.bill.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.bill.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $nomers);	 
    $this->components['view']->SetVar('TOTALLY', $totally);
@@ -1120,7 +1131,7 @@ else
    
 	 };
 	 
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/provodka.editor.tpl');	 
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/provodka.editor.tpl');	 
 $this->components['view']->SetVar('FORM_ACTION', 'provodka');
 $this->components['view']->SetVar('ACTION_NAME', 'Сформированная накладная:');
 $this->components['view']->SetVar('BUTTON_NAME', 'Провести накладную...');	 
@@ -1152,7 +1163,7 @@ $nomers = 0;
 $operation = $_GET['operation']; // Получить номер операции
 // Выбираем товары
    $items = "";
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.detalization.items.tpl');
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.detalization.items.tpl');
    $this->components['db']->setTable('trade_operations_details');
    $this->components['db']->Select("*", "operation='$operation'");
    $i = 0;
@@ -1170,7 +1181,7 @@ $operation = $_GET['operation']; // Получить номер операции
 	     $this->components['view']->CreateView();
 		 $items .= $this->components['view']->GetView();
 	 };
-   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/sklad.detalization.table.tpl');	 
+   $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/sklad.detalization.table.tpl');	 
    $this->components['view']->SetVar('ITEMS', $items);	
    $this->components['view']->SetVar('NOMERS', $i);	 
    $this->components['view']->SetVar('TOTALLY', $totally);
@@ -1196,7 +1207,7 @@ $operation = $_GET['operation']; // Получить номер операции
    $bill = $this->components['view']->GetView();
   
 	 
-$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/sklad/detalization.editor.tpl');	 
+$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/ShopAdmin/detalization.editor.tpl');	 
 $this->components['view']->SetVar('FORM_ACTION', 'processdetalization');
 $this->components['view']->SetVar('ACTION_NAME', 'Зарегистрированная накладная:');
 $this->components['view']->SetVar('BUTTON_NAME', 'Запустить обработчик. Остатки будут обновлены автоматически...');	 

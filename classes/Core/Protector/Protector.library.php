@@ -55,69 +55,94 @@ fclose($fp);
 
 /* GENERAL PROTECTION LAYER */
 
+function  die_on($str,  $test){
+    
+   if (strpos(strtoupper($str), strtoupper($test))!==false) {
+       echo "Detected " . $test;
+       return true;
+   };
+   return false;
+}
+
+
+function custom_stop($str){
+    if (
+             (strpos(strtoupper($str), 'DELETE')!==false)
+          && ( strpos(strtoupper($str), 'ORDERDELETE')===false) 
+          
+          ) {
+         echo "No delete";
+         return true;
+          };
+         return false;
+  
+}
+
 function dang_symb($str)
 {
- $test = false;
- if (strpos($str, "\\")!==false) {$test = true;};
- if (strpos($str, '0x')!==false) {$test = true;};
- if (strpos($str, '/*')!==false) {$test = true;};
- if (strpos($str, '*/')!==false) {$test = true;};
- if (strpos($str, '|')!==false) {$test = true;};
- if (strpos($str, '&&')!==false) {$test = true;};
- if (strpos($str, '--')!==false) {$test = true;};
- if (strpos($str, ':;')!==false) {$test = true;};
- if (strpos($str, ';')!==false) {$test = true;};
- if (strpos($str, '*')!==false) {$test = true;};
- if (strpos($str, ':=')!==false) {$test = true;}; 
- if (strpos($str, '(')!==false) {$test = true;}; 
- if (strpos($str, ')')!==false) {$test = true;}; 
- if (strpos($str, "'")!==false) {$test = true;}; 
- if (strpos($str, ",")!==false) {$test = true;}; 
- if (strpos($str, "#")!==false) {$test = true;}; 
+ $test = false; 
+ $test = custom_stop($str);
+ $test=die_on($str,'0x');
+ $test=die_on($str,'/*');
+ $test=die_on($str,'*/');
+ $test=die_on($str,'|');
+ $test=die_on($str,'&&');
+ $test=die_on($str,'--');
+ $test=die_on($str,':;');
+ //die_on($str,';');
+ //die_on($str,'*');
+ $test=die_on($str,':=');
+ //die_on($str,'(');
+ //die_on($str,')');
+ //die_on($str,"'");
+ //die_on($str,",");
+ //die_on($str,"#");
  
- if (strpos($str, "..")!==false) {$test = true;}; 
- if (strpos($str, "/etc/passwd")!==false) {$test = true;}; 
- if (strpos($str, "c:\\")!==false) {$test = true;}; 
- if (strpos($str, "cmd.exe")!==false) {$test = true;}; 
- if (strpos($str, "\\")!==false) {$test = true;}; 
- if (strpos($str, "//")!==false) {$test = true;}; 
- if (strpos($str, "`")!==false) {$test = true;}; 
- if (strpos($str, "$")!==false) {$test = true;}; 
- if (strpos($str, "|")!==false) {$test = true;}; 
+ //$test=die_on($str,"..");
+ $test=die_on($str,"/etc/passwd");
+ $test=die_on($str,"c:\\");
+ $test=die_on($str,"cmd.exe");
+ $test=die_on($str,"\\");
+ $test=die_on($str,"//");
+ $test=die_on($str,"`");
+ $test=die_on($str,"$");
+ $test=die_on($str,"|");
   
  
-  if (strpos($str, "<")!==false) {$test = true;}; 
-  if (strpos($str, ">")!==false) {$test = true;}; 
-  if (strpos($str, "[")!==false) {$test = true;}; 
-  if (strpos($str, "]")!==false) {$test = true;}; 
+ // $test=die_on($str,"<");
+//  $test=die_on($str,">");
+  $test=die_on($str,"[");
+  $test=die_on($str,"]");
   
-  if (strpos($str, "~")!==false) {$test = true;}; 
-  if (strpos($str, "`")!==false) {$test = true;}; 
+  $test=die_on($str,"~");
+  $test=die_on($str,"`");
   
-  if (strpos(strtoupper($str), 'UNION')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'SELECT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'DROP')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'GROUP')!==false) {$test=true;};  
-  if (strpos(strtoupper($str), 'WHERE')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'UPDATE')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'COUNT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'HAVING')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'SCRIPT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'DELETE')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'OR ')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'AND ')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'IN ')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'SCRIPT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'INSERT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'INTO ')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'VALUES')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'TABLE')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'GRANT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'ROLLBACK')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'COMMIT')!==false) {$test=true;};
-  if (strpos(strtoupper($str), 'CREATE')!==false) {$test=true;};
+  $test=die_on($str, 'UNION');
+  $test=die_on($str,'SELECT');
+  $test=die_on($str,'DROP');
+  $test=die_on($str,'GROUP');  
+  $test=die_on($str,'WHERE');
+  $test=die_on($str,'UPDATE');
+  $test=die_on($str,'COUNT');
+  $test=die_on($str,'HAVING');
+  $test=die_on($str,'SCRIPT');
   
- return $test;
+   
+  $test=die_on($str,'OR ');
+  $test=die_on($str,'AND ');
+  $test=die_on($str,'IN ');
+  $test=die_on($str,'SCRIPT');
+  $test=die_on($str,'INSERT');
+  $test=die_on($str,'INTO ');
+  $test=die_on($str,'VALUES');
+  $test=die_on($str,'TABLE');
+  $test=die_on($str,'GRANT');
+  $test=die_on($str,'ROLLBACK');
+  $test=die_on($str,'COMMIT');
+  $test=die_on($str,'CREATE');
+  
+  return $test;
+ 
  }
  
 function dang_in_arr($arr)
@@ -158,7 +183,7 @@ function general_protection($filter = true)
   statinfo($hits);
   if ($filter)
   {
-  die_on_dang();
+  $test=die_on_dang();
   };
   };
 }

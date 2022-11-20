@@ -19,7 +19,7 @@
 <textarea name="agent" cols="45" rows="5">
 ~AGENT~
 </textarea>
-<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 CKEDITOR.replace( 'agent');
 </script>

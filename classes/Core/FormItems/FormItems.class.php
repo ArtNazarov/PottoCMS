@@ -176,8 +176,8 @@ return $t;
 
 function ImagesSelector($path, $full_image, $name, $width="100%", $css_class = "image_selector")
 {
-    $x = null;
- $helper = new FormItems($x);
+    $initParams = [];
+ $helper = new FormItems($initParams);
  $columns = 3;
  $selected = 'http://'.$_SERVER['SERVER_NAME'].$full_image;
  $file_list = scandir($_SERVER['DOCUMENT_ROOT'].$path);
