@@ -4,38 +4,41 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <title>~SITE_NAME~ / ~TITLE~</title>
-    <link href="/vendors/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="/vendors/plugins/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-</head>   
+    
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>   
+
 <body>
 <div class="container">
-
-   <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/content/mainpage">~SITE_NAME~</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="/content/mainpage">Главная страница</a></li>              
-			  <li><a href="/shop/view">Пример магазина</a></li>              
-              <li><a href="/feedback/writemail">Обратная связь</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+ <div class="row">
+    <nav class="navbar navbar-dark bg-primary">
+   <div class="container-fluid">
+    <a class="navbar-brand" href="#">~SITE_NAME~</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+         
+        <li class="nav-item">
+          <a class="nav-link" href="/content/mainpage">Главная страница</a>
+        </li>
+        <li class="nav-item">
+            <li><a class="nav-link" href="/shop/view">Пример магазина</a></li>
+        </li>
+        <li class="nav-item">
+            <li><a class="nav-link" href="/feedback/writemail">Обратная связь</a></li>        </li>
+      </ul>
     </div>
-
-<br/>	  
-<br/>
-<br/>
+  </div>
+</nav>
+ </div>
+ 
 	  
      
 	 <div class="row">
+             <div class="col">
         <h3>~SPEC_LINK~ ~TITLE~</h3>
 		
 		~BREADCRUMBS~
@@ -43,27 +46,29 @@
 		~BODY~
 				
 		~ATTRS~
-		
+             </div>
 		<!-- ~DEBUG_INFO~ -->
 	</div>	
 		
     <div class="row">
+        <div class="col">
 			~COM_BODY~	
 			~COM_FORM~				
-	</div>
+             </div>
+        </div>
 	
 	
 	
 	      
       <div class="row">
-        <div class="span4">
+        <div class="col span4">
 			<h2>Обновления</h2>
 			~LATEST_ARTICLES~
         </div>
-        <div class="span4">
+        <div class="col span4">
 			~BLOCK1~
        </div>
-        <div class="span4">
+        <div class="col span4">
           <h2>Пользователь</h2>
           ~USER_AREA~	
         </div>
@@ -79,18 +84,7 @@
 
 	
     
-    <script src="/vendors/plugins/jquery/jquery.js"></script>    
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-transition.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-alert.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-modal.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-dropdown.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-scrollspy.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tab.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tooltip.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-popover.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-button.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-collapse.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-carousel.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-typeahead.js"></script>   
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 </body>
 </html>

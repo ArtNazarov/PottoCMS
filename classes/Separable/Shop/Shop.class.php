@@ -687,7 +687,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 		$c = 1;
 	$rows = $this->components['db']->Read(); foreach ($rows as $i=>$data)
 	{
-		if ($c==1) {$items .= "<tr>";};
+		if ($c==1) {$items .= "<div class='row'>";};
 	   	$this->components['view']->SetVar('ARTIKUL', $data['artikul']);
 		$artikul = $data['artikul'];
 		$this->components['view']->SetVar('TYPE', $data['type']);
@@ -735,7 +735,7 @@ $this->components['view']->SetVar('html_vkontanke_w', 'test...');
 		$this->components['view']->CreateView();
 		$items .= $this->components['view']->GetView();
 		$c = $c + 1;
-		if ($c > $max_col) {$c = 1; $items .= "</tr>";};
+		if ($c > $max_col) {$c = 1; $items .= "</div>";};
 	}  // end while
 
       $this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/classes/Separable/Shop/shop.table.tpl');

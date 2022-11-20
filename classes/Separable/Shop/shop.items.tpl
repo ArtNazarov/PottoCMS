@@ -1,4 +1,4 @@
-<td width="33%" valign="top">
+<div class="col">
 	<div class="itemmini" style="min-height:350px; ~ITEMINCART~ ">	        
 	        ~CONTEXT~
 			<span style="font-size:10px">Артикул:~ARTIKUL~</span><br/>
@@ -11,5 +11,5 @@
 			<a href="/shop/buyer/viewitempage/~ARTIKUL~">подробнее</a>				
 			
 				</div>					
-</td>
+</div>
 

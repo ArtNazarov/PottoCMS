@@ -46,12 +46,14 @@
     <input type="hidden" name="filter_category" value="">
     <input class="btn" type="submit" name="button" id="button" value="Применить">
 </form>
-<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 
 document.forms.editor.filter_category.value = document.forms.editor.category.value;
 
 document.getElementById("category").onchange = function()
- { 	document.forms.editor.filter_category.value = document.forms.editor.category.value; };
+ {
+ 	document.forms.editor.filter_category.value = document.forms.editor.category.value;
+ };
 CKEDITOR.replace( 'body');
 </script>

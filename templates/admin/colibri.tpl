@@ -6,9 +6,10 @@
 <meta name="robots" content="noindex"/>
 <title>~TITLE~</title>
 	<link rel="stylesheet" type="text/css" href="/templates/admin/menu.css" >  
-    <link href="/vendors/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="/vendors/plugins/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">		
-	<style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>   
+
+<style>
 #adm_footer
 {
 bottom: 0;
@@ -74,18 +75,15 @@ table.cp tr:hover
     </div> <!-- /container -->
     
    
-    <script src="/vendors/plugins/js/jquery.js"></script>    
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-transition.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-alert.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-modal.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-dropdown.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-scrollspy.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tab.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-tooltip.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-popover.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-button.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-collapse.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-carousel.js"></script>
-    <script src="/vendors/plugins/bootstrap/assets/bootstrap-typeahead.js"></script>   
+    <script src="/vendor/components/jquery/jquery.js"></script>    
+  
+    
+            
+            "
+            
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+   
 </body>
 </html>

@@ -25,9 +25,8 @@ a.pagelink {background-color:#a60000; color:#FFFFFF; padding:5;}
 
 
 
-<table width="100%">
-<tr>
-<td width="30%" valign="top" align="left">
+<div class="row">
+<div class="col">
   
 <div style="word-wrap:break-all;-webkit-border-radius: 6px;
 -moz-border-radius: 6px; padding:5px; margin:5px;
@@ -86,14 +85,14 @@ border-radius: 6px; background-color:#e8e8e8;
 Просмотров всех товаров:<br/>
 ~TOTALVIEWS~
 </div>
-</td>
-<td valign="top" align="left">
-		<table width="100%" class="sklad">
+</div>
+<div class="col">
+		<div class="row" class="sklad">
 		~ITEMS~
-		</table><br/>
+		</div><br/>
 		<span style="-webkit-border-radius: 6px;
 		-moz-border-radius: 6px; vertical-align:middle; padding-left:5px; padding-right:5px; font-size:10px; margin:0px;
 		border-radius: 6px; background-color:#ffffff;">~TOTAL~ ~PAGES~</span>
-</td>
-</tr>
-</table>
+</div>
+</div>
+ 

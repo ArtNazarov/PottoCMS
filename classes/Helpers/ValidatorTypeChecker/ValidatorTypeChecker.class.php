@@ -10,8 +10,8 @@ function special_handler($exception)
       $file = fopen($_SERVER['DOCUMENT_ROOT']. "/logs/exceptions.log", "a+");      
       fwrite($file,  $msg. "\n");
       fclose($file);    
-      //echo $msg . "\n\r";
-     // debug_print_backtrace();
+       echo $msg . "\n\r";
+     debug_print_backtrace();
 die();
 
 

@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/plugins/jquery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/vendor/components/jquery/jquery.js"></script>
 <style type="text/css">
 .crow {border-bottom:#069 dashed thin; cursor:pointer;}
 .pseudolink {border-bottom:#06C solid thin; cursor:pointer;}

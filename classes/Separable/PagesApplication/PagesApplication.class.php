@@ -672,6 +672,8 @@ if ($c > $cols) {$t .= "</tr>"; $c = 1;};
 	// Склад
 	function skladpage()
 	{
+            
+                    
 	$this->components['view']->UseTpl($_SERVER['DOCUMENT_ROOT'].'/templates/readers/bootstrap.tpl');	
 	$human= $this->system['username'];	
 	$role = $this->system['usergroup'];
@@ -859,7 +861,7 @@ if ($c > $cols) {$t .= "</tr>"; $c = 1;};
 			// Регистрация
 			case 'register' :
 			{
-$this->components['usr']->UserRegistration();
+ $this->components['usr']->UserRegistration();
  exit;
 			}
 			// Заполнение формы для входа

@@ -1,7 +1,9 @@
 <script src="http://www.google.com/jsapi"></script>  
+
 <script type="text/javascript">    
-    google.load("jquery", "1.2.6");  
-</script>	
+    google.load("jquery", "3.6.0");  
+</script>
+
 <style>
 #chatwnd
 { display:block; height:300px; width:100%; overflow-x:hidden;

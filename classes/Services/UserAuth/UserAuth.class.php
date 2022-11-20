@@ -17,7 +17,7 @@ class UserAuth
 
         public function __construct(array &$params)
         {
-        $this->components = null;
+        $this->components = [];
         $this->components['factory'] = new ClassFactory($params); // Фабрика классов
  // Настройки базы данныx  
 if (is_null($params)) {echo "Параметры UserAuth не заданы";exit();}; 
@@ -40,7 +40,7 @@ if (check_class($params, 'db', 'DataBaseLayer')) // проинициализир
          $this->components['view'] = $this->components['factory']->createInstance("TemplateTool", $params, 'Core');
          $this->components['log'] = $this->components['factory']->createInstance("Log", $params, 'Core');
          $this->components['formitems'] = $this->components['factory']->createInstance("FormItems", $params, 'Core');
-        // $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params, 'Services');
+         $this->components['captcha'] = $this->components['factory']->createInstance("CaptchaTool", $params, 'Services');
          $this->components['var_cache'] = $this->components['factory']->createInstance("CacheLayer", $params, 'Core');
 	 $this->components['var_cache']->lifetime = 600;
         }
@@ -74,7 +74,13 @@ if (check_class($params, 'db', 'DataBaseLayer')) // проинициализир
 		else {$ukey = ""; };
         $this->components['db']->Select('role', "ukey='$ukey'");
         $data = @$this->components['db']->Read()[0];
+        if (!is_null($data)){
         $role = $data['role'];
+        }
+        else
+        {
+            $role='guest';
+        }
         return $role;
 }	
 
@@ -656,8 +662,11 @@ return $s;
                 $aUser = $_POST['user'];
                 // Пароль
                 $aPassword = $_POST['password'];
-                // Если пользователя нет в базе, то выводим сообщение об ошибке
-                if ($this->UserExists("$aUser") == true) {$this->UserRegisterFailMsg();} else
+                // Если пользователь есть в базе, то выводим сообщение об ошибке
+                if ($this->UserExists("$aUser") == true) {
+                    
+                    die();
+                    $this->UserRegisterFailMsg();} else
                 {
                 // в обратном случае регистрация
                 // Создаем ключ на основе пары имя пользователя - пароль
@@ -677,8 +686,8 @@ return $s;
         public function RegisterUser($aUser, $aKey, $aRole) // БД: регистрация
         {
 		$this->components['db']->setTable('users');
-                $this->components['db']->Insert('user, ukey, role', "'$aUser', '$aKey', '$aRole'");
-
+                $this->components['db']->Insert('user, ukey, role, online', "'$aUser', '$aKey', '$aRole', 1");
+                                
         }
     public function RoleCheck($aUser, $aRole) // Проверка роли
         {

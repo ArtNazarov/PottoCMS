@@ -1,0 +1,22 @@
+{
+    "name": "artnazarov/potto-cms",
+    "description": "PHP 8 driven CMS",
+    "type": "project",
+    "require": {
+        "ckeditor/ckeditor": "4.*",
+        "php-console/php-console": "3.1.8",
+        "components/jqueryui": "^1.12",
+        "components/jquery": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Artnazarov\\PottoCms\\": "classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Artem Nazarov",
+            "email": "programmist.nazarov@gmail.com"
+        }
+    ]
+}

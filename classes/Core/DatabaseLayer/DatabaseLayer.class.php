@@ -25,6 +25,7 @@ class DatabaseLayer
 	var $components;
         var $recordset;
         var $precord;
+        var $isCleared = false;
         
         
         function readCursor()
@@ -45,6 +46,7 @@ class DatabaseLayer
         
 	function __construct(array $params)
 	{
+            $this->isCleared = false;
             //echo "Вход в DatabaseLayer->__construct()<br/>";
             try {
             //echo "Создаю объект базы данных<br/>";
@@ -157,7 +159,7 @@ $this->sql_result = mysqli_query(
    {
     $this->log->WriteLog("sql", "found database ". $row[0]);
    };
-    mysqli_free_result($this->sql_result);
+    $this->Clear();
 
 /* выбираем текущую */
 $this->sql_result = mysqli_query(
@@ -173,7 +175,7 @@ $this->sql_result = mysqli_query(
   
     $row = mysqli_fetch_row($this->sql_result);
     $this->log->WriteLog("sql", "Default database is ". $row[0]);
-    mysqli_free_result($this->sql_result);
+    $this->Clear();
 
 
 /*
@@ -190,18 +192,32 @@ if (false == $this->db)
  * Освобождает память от выборки
  */
 	function Clear()
-	{                 
+	{     
+            // если не очищено
+            if (!$this->isCleared)  
+            {
+                
             try {
+                if (!is_null($this->sql_result)) {
 		 @mysqli_free_result($this->sql_result);
-            } catch (Exception $e) {
+                    }
+                }
+            catch (Exception $e) {
              // if result already cleared
              //debug_print_backtrace();
              $mess = "ERROR DatabaseLayer.class.php at Clear: ".mysqli_error($this->db_link);
              $this->log->WriteLog('sql', $mess);
              //die();
             }
+            
+            
+            }
+            
             $this->log->WriteLog('sql', 'call mysql_free_result, counter =  '.$this->query_counter."\n");
-	}
+            $this->isCleared = true;
+            
+            
+            }
 /*
  * Число строк в выборке
  */
@@ -222,7 +238,8 @@ if (false == $this->db)
  * Выполняет SQL запрос к базе данных
  */        
 	function SQL($aQuery)        
-	{                
+	{        
+                $this->isCleared = false;
 		$this->CheckConnention(); 
 		$this->query_counter++;
 		$this->log->WriteLog('sql', 'exec query '.$this->query." \n ");		                

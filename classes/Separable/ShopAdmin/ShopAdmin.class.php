@@ -110,7 +110,7 @@ var $dtype_const = array(''=>'Без статуса', 'plus'=>'Завоз', 'min
      */
 function __construct(array &$params)
 {
-	$this->components = null;
+	$this->components = [];
     $this->components['factory'] = new ClassFactory($params);
     // Настройки базы данных
 if (($params['db']!=null) && (is_object($params['db'])))
